@@ -20,6 +20,4 @@ public:
     bool operator>(const Movie& ) const;
     bool operator<(const Movie& ) const;
     Movie* operator=(const Movie& );
-
-
 };
