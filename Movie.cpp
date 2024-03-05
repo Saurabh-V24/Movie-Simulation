@@ -1,5 +1,6 @@
 #include "Movie.h"
 #include <iostream>
+using namespace std;
 
 Movie::Movie() : typeOfMovie(' '), stock(0), director(""), title(""), yearReleased(0) {}
 
@@ -12,14 +13,15 @@ Movie::Movie(char typeOfMovie, int stock, string director, string title, int yea
     setYearReleased(yearReleased);
 }
 
-Movie::~Movie(){}
+Movie::~Movie() {}
 
-void Movie::buildingData(ifstream& file) {
+void Movie::buildingData(ifstream &file)
+{
     int stock;
     int yearReleased;
     string director;
     string title;
-    
+
     file.ignore(1);
     file >> stock;
     file.ignore(2);
@@ -27,76 +29,90 @@ void Movie::buildingData(ifstream& file) {
     file.ignore(1);
     getline(file, title, ',');
     file >> yearReleased;
-    
+
     setStock(stock);
     setDirector(director);
     setTitle(title);
     setYearReleased(yearReleased);
 }
 
-void Movie::setTypeOfMovie(char typeOfMovie){
+void Movie::setTypeOfMovie(char typeOfMovie)
+{
     this->typeOfMovie = typeOfMovie;
 }
 
-void Movie::setStock(int stock){
+void Movie::setStock(int stock)
+{
     this->stock = stock;
 }
 
-void Movie::setDirector(string director){
+void Movie::setDirector(string director)
+{
     this->director = director;
 }
 
-void Movie::setTitle(string title){
+void Movie::setTitle(string title)
+{
     this->title = title;
 }
 
-void Movie::setYearReleased(int yearReleased){
+void Movie::setYearReleased(int yearReleased)
+{
     this->yearReleased = yearReleased;
 }
 
-void Movie::setMajorActor(string majorActor){
-
+void Movie::setMajorActor(string majorActor)
+{
 }
 
-void Movie::setReleaseMonth(int month){
-
+void Movie::setReleaseMonth(int month)
+{
 }
 
-char Movie::getTypeOfMovie() const{
+char Movie::getTypeOfMovie() const
+{
     return typeOfMovie;
 }
 
-int Movie::getStock() const{
+int Movie::getStock() const
+{
     return stock;
 }
 
-string Movie::getDirector() const{
+string Movie::getDirector() const
+{
     return director;
 }
 
-string Movie::getTitle() const{
+string Movie::getTitle() const
+{
     return title;
 }
 
-int Movie::getYearReleased() const{
+int Movie::getYearReleased() const
+{
     return yearReleased;
 }
 
-string Movie::getMajorActor() const {
+string Movie::getMajorActor() const
+{
     return majorActor;
 }
 
-int Movie::getReleaseMonth() const{
+int Movie::getReleaseMonth() const
+{
     return month;
 }
 
-bool Movie::increaseStock(){
+bool Movie::increaseStock()
+{
     stock++;
     return true;
 }
 
-bool Movie::decreaseStock(){
-    if(stock == 0)
+bool Movie::decreaseStock()
+{
+    if (stock == 0)
     {
         return false;
     }
@@ -104,11 +120,13 @@ bool Movie::decreaseStock(){
     return true;
 }
 
-void Movie::display() const{
+void Movie::display() const
+{
     cout << getTypeOfMovie() << " " << getStock() << " " << getDirector() << " " << getTitle() << " " << getYearReleased() << endl;
 }
 
-// Movie* Movie::operator=(const Movie &c){
+// Movie *Movie::operator=(const Movie &c)
+// {
 //     return this;
 // }
 
@@ -142,4 +160,5 @@ int main()
         cout << "Title: " << movie.getTitle() << endl;
         cout << "Year Released: " << movie.getYearReleased() << endl;
     }
+    infile1.close();
 }
