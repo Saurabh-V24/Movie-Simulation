@@ -80,6 +80,7 @@ bool Classic::operator>(const Movie &other) const
         else if (getReleaseMonth() == other.getReleaseMonth())
         {
             // compare first substring of major actor
+            // Implmenet substring comparison
             if (getMajorActor() > other.getMajorActor())
             {
                 return true;
