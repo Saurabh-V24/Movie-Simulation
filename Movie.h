@@ -27,11 +27,11 @@ public:
     virtual string getMajorActor() const;
     virtual int getReleaseMonth() const;
 
-    virtual bool operator==(const Movie& )const;
-    virtual bool operator!=(const Movie& )const;
-    virtual bool operator>(const Movie& )const;
-    virtual bool operator<(const Movie& )const;
-    virtual Movie* operator=(const Movie& );
+    // virtual bool operator==(const Movie& )const;
+    // virtual bool operator!=(const Movie& )const;
+    // virtual bool operator>(const Movie& )const;
+    // virtual bool operator<(const Movie& )const;
+    // virtual Movie* operator=(const Movie& );
 
     virtual bool increaseStock();
     virtual bool decreaseStock();
@@ -44,5 +44,4 @@ protected:
     string director;
     string title;
     int yearReleased;
-    
 };
