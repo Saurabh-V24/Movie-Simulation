@@ -40,7 +40,6 @@ void Movie::buildingData(ifstream& file) {
         cerr << "ERROR: Invalid Genre. Try Again." << endl;
         return;
     }
-   
     setStock(stock);
     setDirector(director);
     setTitle(title);
