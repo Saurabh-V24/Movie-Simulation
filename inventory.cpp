@@ -104,3 +104,13 @@ bool Inventory::searchingClassicMovie(int releaseMonth, int releaseYear, string 
     cerr << "ERROR: Movie is not found" << endl;
     return false;
 }
+
+int main() {
+    // testing the inventory class
+    Inventory i;
+    i.creatingInventory("data4movies.txt");
+    i.viewingDrama();
+    i.viewingClassic();
+    i.viewingComedy();
+    return 0;
+}
