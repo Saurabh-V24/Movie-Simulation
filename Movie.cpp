@@ -15,8 +15,6 @@ Movie::Movie(char typeOfMovie, int stock, string director, string title, int yea
 
 Movie::~Movie() {}
 
-CommittingMovie
-void Movie::buildingData(ifstream& file) {
 
 void Movie::buildingData(ifstream &file)
 {
@@ -25,10 +23,6 @@ void Movie::buildingData(ifstream &file)
     int yearReleased;
     string director;
     string title;
-CommittingMovie
-    
-
-
 
     file.ignore(1);
     file >> stock;
@@ -37,10 +31,7 @@ CommittingMovie
     file.ignore(1);
     getline(file, title, ',');
     file >> yearReleased;
-    CommittingMovie
-    
-
-
+ 
     setStock(stock);
     setDirector(director);
     setTitle(title);
@@ -137,8 +128,6 @@ void Movie::display() const
 }
 
 
-// Movie* Movie::operator=(const Movie &c){
-
 // Movie *Movie::operator=(const Movie &c)
 // {
 
@@ -176,7 +165,7 @@ int main()
         cout << "Year Released: " << movie.getYearReleased() << endl;
     }
 
-}
+
 
     infile1.close();
 }

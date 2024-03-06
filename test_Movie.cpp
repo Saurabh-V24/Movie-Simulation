@@ -1,5 +1,5 @@
 using namespace std;
-#include "movie.h"
+#include "Movie.h"
 #include <fstream>
 #include <iostream>
 #include <string>
