@@ -1,33 +1,37 @@
+#ifndef Inventory_h
+#define Inventory_h
 
+#include <vector>
 #include <string>
 #include <iostream>
 #include <fstream>
-#include <vector>
+
 #include "Movie.h"
-#include "Drama.h"
 #include "classic.h"
 #include "Comedy.h"
+#include "Drama.h"
+
 using namespace std;
 
-class Inventory{
-public: 
+class Inventory
+{
+public:
     Inventory();
     ~Inventory();
-
-    void creatingInventory(string const &movie);
-
-    void viewingDrama();
-    void viewingComedy();
+    
+    void buildInventory(string const &movie);
+    
     void viewingClassic();
-
-    bool searchingClassicMovie(int releaseMonth, int yearReleased, string title, Movie *&movieSelection);
-    bool searchingComedyMovie(string title, int yearReleased, Movie *&movieSelection);
-    bool searchingDramaMovie(string director, string title, Movie *&movieSelection);
-
+    void viewingComedy();
+    void viewingDrama();
+    void viewingInventory();
+    
+    bool searchingClassic(int month, int year, string title, Movie *&movie);
+    bool searchingComedy(string title, int releaseYear, Movie *&movie);
+    bool searchingDrama(string director, string title, Movie *&movie);
 private:
-    vector<Classic> classicMovie;
-    vector<Drama> dramaMovie;
-    vector<Comedy> comedyMovie;
-
+    vector<Classic> classic;
+    vector<Comedy> comedy;
+    vector<Drama> drama;      
 };
-
+#endif 

@@ -1,47 +1,52 @@
 #include "Movie.h"
-#include <iostream>
-using namespace std;
 
-Movie::Movie() : typeOfMovie(' '), stock(0), director(""), title(""), yearReleased(0) {}
-
-Movie::Movie(char typeOfMovie, int stock, string director, string title, int yearReleased)
+Movie::Movie()
 {
-    setTypeOfMovie(typeOfMovie);
+    setTypeOfMovie('B');
+}
+
+Movie::Movie(char movieType, int stock, string director, string title, int yearReleased)
+{
+    setTypeOfMovie(movieType);
     setStock(stock);
     setDirector(director);
     setTitle(title);
-    setYearReleased(yearReleased);
+    setReleaseYear(yearReleased);
 }
 
-Movie::~Movie() {}
+Movie::~Movie(){}
 
 
 void Movie::buildingData(ifstream &file)
 {
+    struct MovieData {
+        int stock;
+        int releaseYear;
+        string director;
+        string title;
+    } movieData;
 
-    int stock;
-    int yearReleased;
-    string director;
-    string title;
-  
-  
     file.ignore(1);
-    file >> stock;
+    file >> movieData.stock;
     file.ignore(2);
-    getline(file, director, ',');
+    getline(file, movieData.director, ',');
     file.ignore(1);
-    getline(file, title, ',');
-    file >> yearReleased;
-    setStock(stock);
-    setDirector(director);
-    setTitle(title);
-    setYearReleased(yearReleased);
+    getline(file, movieData.title, ',');
+    file >> movieData.releaseYear;
+
+    setStock(movieData.stock);
+    setDirector(movieData.director);
+    setTitle(movieData.title);
+    setReleaseYear(movieData.releaseYear);
 }
+
+
 
 void Movie::setTypeOfMovie(char typeOfMovie)
 {
     this->typeOfMovie = typeOfMovie;
 }
+
 
 void Movie::setStock(int stock)
 {
@@ -53,58 +58,73 @@ void Movie::setDirector(string director)
     this->director = director;
 }
 
+
 void Movie::setTitle(string title)
 {
     this->title = title;
 }
 
-void Movie::setYearReleased(int yearReleased)
+
+void Movie::setReleaseYear(int yearReleased)
 {
     this->yearReleased = yearReleased;
 }
 
-void Movie::setMajorActor(string majorActor)
+void Movie::setMajorActor(string majorActor){}
+
+
+bool Movie::setReleaseMonth(int month)
 {
+    if(month < 1)
+    {
+        return false;
+    }
+    
+    return true;
 }
 
-void Movie::setReleaseMonth(int month)
-{
-}
 
 char Movie::getTypeOfMovie() const
 {
     return typeOfMovie;
 }
 
+
 int Movie::getStock() const
 {
     return stock;
 }
+
 
 string Movie::getDirector() const
 {
     return director;
 }
 
+
 string Movie::getTitle() const
 {
     return title;
 }
 
-int Movie::getYearReleased() const
+
+int Movie::getReleaseYear( )const
 {
     return yearReleased;
 }
 
-string Movie::getMajorActor() const
+
+string Movie::getMajorActor()const
 {
     return "";
 }
 
-int Movie::getReleaseMonth() const
+
+int Movie::getReleaseMonth()const
 {
     return 0;
 }
+
 
 bool Movie::increaseStock()
 {
@@ -112,59 +132,25 @@ bool Movie::increaseStock()
     return true;
 }
 
+
 bool Movie::decreaseStock()
 {
-    if (stock == 0)
+    if(stock == 0)
     {
         return false;
     }
+    
     stock--;
     return true;
 }
 
-void Movie::display() const
+
+Movie* Movie::operator=(const Movie &c)
 {
-    cout << getTypeOfMovie() << " " << getStock() << " " << getDirector() << " " << getTitle() << " " << getYearReleased() << endl;
+    return this;
 }
 
-
-// Movie *Movie::operator=(const Movie &c)
-// {
-
-//     return this;
-// }
-
-int main()
+void Movie::display()const
 {
-
-    cout << "Part 1" << endl;
-    ifstream infile1("data4movies.txt");
-    if (!infile1)
-    {
-        cout << "File could not be opened." << endl;
-        return 1;
-    }
-
-    // for each graph, find the shortest path from every node to all other nodes
-    for (;;)
-    {
-
-        if (infile1.eof())
-        {
-            cout << "No more movies" << endl;
-            break;
-        }
-
-        Movie movie;
-        movie.buildingData(infile1);
-        movie.display();
-
-        cout << "Stock: " << movie.getStock() << endl;
-        cout << "Director: " << movie.getDirector() << endl;
-        cout << "Title: " << movie.getTitle() << endl;
-        cout << "Year Released: " << movie.getYearReleased() << endl;
-    }
-
-    infile1.close();
+    cout << getTypeOfMovie() << " " << getStock() << " " << getDirector() << " " << getTitle() << " " << getReleaseYear() << endl;
 }
-
