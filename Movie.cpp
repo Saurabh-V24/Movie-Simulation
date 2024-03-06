@@ -23,10 +23,8 @@ void Movie::buildingData(ifstream &file)
     int yearReleased;
     string director;
     string title;
-    
-
-
-
+  
+  
     file.ignore(1);
     file >> stock;
     file.ignore(2);
@@ -34,9 +32,6 @@ void Movie::buildingData(ifstream &file)
     file.ignore(1);
     getline(file, title, ',');
     file >> yearReleased;
-    
-
-
     setStock(stock);
     setDirector(director);
     setTitle(title);
@@ -132,8 +127,6 @@ void Movie::display() const
     cout << getTypeOfMovie() << " " << getStock() << " " << getDirector() << " " << getTitle() << " " << getYearReleased() << endl;
 }
 
-
-// Movie* Movie::operator=(const Movie &c){
 
 // Movie *Movie::operator=(const Movie &c)
 // {
