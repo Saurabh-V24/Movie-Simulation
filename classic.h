@@ -12,9 +12,17 @@ public:
     ~Classic();
     void display();
 
+    string getMajorActor() const;
+    int getReleaseMonth() const;
+    string setMajorActor(string) const;
+    int setReleaseMonth(int) const;
     bool operator==(const Movie &) const;
     bool operator!=(const Movie &) const;
     bool operator>(const Movie &) const;
     bool operator<(const Movie &) const;
     Movie *operator=(const Movie &);
+
+private:
+    string majorActor;
+    int releaseMonth;
 };

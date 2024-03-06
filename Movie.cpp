@@ -23,7 +23,8 @@ void Movie::buildingData(ifstream &file)
     int yearReleased;
     string director;
     string title;
-
+  
+  
     file.ignore(1);
     file >> stock;
     file.ignore(2);
@@ -31,7 +32,6 @@ void Movie::buildingData(ifstream &file)
     file.ignore(1);
     getline(file, title, ',');
     file >> yearReleased;
- 
     setStock(stock);
     setDirector(director);
     setTitle(title);
@@ -98,12 +98,12 @@ int Movie::getYearReleased() const
 
 string Movie::getMajorActor() const
 {
-    return majorActor;
+    return "";
 }
 
 int Movie::getReleaseMonth() const
 {
-    return month;
+    return 0;
 }
 
 bool Movie::increaseStock()
@@ -164,8 +164,6 @@ int main()
         cout << "Title: " << movie.getTitle() << endl;
         cout << "Year Released: " << movie.getYearReleased() << endl;
     }
-
-
 
     infile1.close();
 }

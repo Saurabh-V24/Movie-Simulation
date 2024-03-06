@@ -42,8 +42,6 @@ public:
     virtual bool decreaseStock();
 
 protected:
-    int month;
-    string majorActor;
     char typeOfMovie;
     int stock;
     string director;
