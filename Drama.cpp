@@ -1,14 +1,11 @@
+#include <stdio.h>
 #include "Drama.h"
-using namespace std;
 
-Drama::Drama() : Movie()
+Drama::Drama()
 {
     setTypeOfMovie('D');
-    setStock(0);
-    setDirector("");
-    setTitle("");
-    setYearReleased(0);
 }
+
 
 Drama::Drama(int stock, string director, string title, int yearReleased)
 {
@@ -16,71 +13,73 @@ Drama::Drama(int stock, string director, string title, int yearReleased)
     setStock(stock);
     setDirector(director);
     setTitle(title);
-    setYearReleased(yearReleased);
+    setReleaseYear(yearReleased);
 }
 
 Drama::~Drama() {}
 
+
 void Drama::buildingData(ifstream &file)
 {
-    int stock;
-    int releaseYear;
-    string director;
-    string title;
+    struct MovieData {
+        int stock;
+        int releaseYear;
+        string director;
+        string title;
+    } movieData;
 
     file.ignore(1);
-    file >> stock;
+    file >> movieData.stock;
     file.ignore(2);
-    getline(file, director, ',');
+    getline(file, movieData.director, ',');
     file.ignore(1);
-    getline(file, title, ',');
-    file >> releaseYear;
+    getline(file, movieData.title, ',');
+    file >> movieData.releaseYear;
 
-    setStock(stock);
-    setDirector(director);
-    setTitle(title);
-    setYearReleased(releaseYear);
+    setStock(movieData.stock);
+    setDirector(movieData.director);
+    setTitle(movieData.title);
+    setReleaseYear(movieData.releaseYear);
 }
 
-bool Drama::operator==(const Movie &compareDrama) const
-{
-    return (getStock() == compareDrama.getStock()) && (getDirector().compare(compareDrama.getDirector()) == 0) && (getTitle().compare(compareDrama.getTitle()) == 0) && (getYearReleased() == compareDrama.getYearReleased());
+bool Drama::operator==(const Movie& other) const {
+    return (getStock() == other.getStock()) && (getDirector().compare(other.getDirector()) == 0) 
+    && (getTitle().compare(other.getTitle()) == 0) && (getReleaseYear() == other.getReleaseYear());
 }
 
-bool Drama::operator!=(const Movie &compareDrama) const
+bool Drama::operator!=(const Movie& other)const
 {
-    return !(*this == compareDrama);
+    return !(*this == other);
 }
 
-bool Drama::operator>(const Movie &compareDrama) const
-{
-    if (getDirector() != compareDrama.getDirector())
-    {
-        return getDirector() > compareDrama.getDirector();
+
+bool Drama::operator>(const Movie& other) const {
+    if (getDirector() != other.getDirector()) {
+        return getDirector() > other.getDirector();
     }
-    return getTitle() > compareDrama.getTitle();
+    return getTitle() > other.getTitle();
 }
 
-bool Drama::operator<(const Movie &compareDrama) const
-{
-    int directorComparison = getDirector().compare(compareDrama.getDirector());
-    if (directorComparison < 0 || (directorComparison == 0 && getTitle().compare(compareDrama.getTitle()) < 0))
+
+bool Drama::operator<(const Movie& other) const{
+    int directorComparison = getDirector().compare(other.getDirector());
+    if (directorComparison < 0 || (directorComparison == 0 && getTitle().compare(other.getTitle()) < 0))
     {
         return true;
     }
     return false;
 }
 
-Movie *Drama::operator=(const Movie &compareDrama)
+Movie* Drama::operator=(const Movie &d)
 {
-    setStock(compareDrama.getStock());
-    setDirector(compareDrama.getDirector());
-    setTitle(compareDrama.getTitle());
-    setYearReleased(compareDrama.getYearReleased());
+    setStock(d.getStock());
+    setDirector(d.getDirector());
+    setTitle(d.getTitle());
+    setReleaseYear(d.getReleaseYear());
     return this;
 }
 
 void Drama::display()
 {
-    cout << getTypeOfMovie() << " " << getStock() << " " << getDirector() << " " << getTitle() << " " << getYearReleased() << endl;
+    cout << getTypeOfMovie() << " " << getStock() << " " << getDirector() << " " << getTitle() << " " << getReleaseYear() << endl;
 }
