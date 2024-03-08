@@ -3,6 +3,11 @@
 using namespace std;
 
 Comedy::Comedy() : Movie(){ 
+    setTypeOfMovie('F');
+    setStock(0);
+    setDirector("");
+    setTitle("");
+    setYearReleased(0);
 }
 
 Comedy::Comedy(int stock, string director, string title, int yearReleased){

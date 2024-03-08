@@ -1,7 +1,9 @@
 #include "classic.h"
 using namespace std;
 
-Classic::Classic() : Movie(){ 
+Classic::Classic() : Movie() { 
+    majorActor = "";
+    releaseMonth = 0;
 }
 
 Classic::Classic(char genre, int stock, string director, string title, string majorActor, int month, int yearReleased)

@@ -7,29 +7,36 @@ Inventory::Inventory(){}
 Inventory::~Inventory(){}
 
 void Inventory::creatingInventory(string const &movie){
+
     ifstream movies(movie);
+
     if(!movies){
         cerr << "ERROR: Invalid. Try again" << endl; 
         return;
     }
+
     char typeOfMovie;
     while(!movies.eof()){
+
         movies >> typeOfMovie;
         if(typeOfMovie == 'C'){
             Classic *c = new Classic();
             c->buildingData(movies);
             classicMovie.push_back(*c);
         }
+
         else if(typeOfMovie == 'D'){
             Drama *d = new Drama();
             d->buildingData(movies);
             dramaMovie.push_back(*d);
         }
+
         else if(typeOfMovie == 'F'){
             Comedy *f = new Comedy();
             f->buildingData(movies);
             comedyMovie.push_back(*f);
         }
+        
         else{
             cerr << "ERROR: " << typeOfMovie << " Invalid Genre " << endl;
         }
@@ -108,9 +115,13 @@ bool Inventory::searchingClassicMovie(int releaseMonth, int releaseYear, string 
 int main() {
     // testing the inventory class
     Inventory i;
+    cout << "Creating inventory" << endl;
     i.creatingInventory("data4movies.txt");
+    cout << "Viewing Drama" << endl;
     i.viewingDrama();
+    cout << "Viewing Classic" << endl;
     i.viewingClassic();
+    cout << "Viewing Comedy" << endl;
     i.viewingComedy();
     return 0;
 }
