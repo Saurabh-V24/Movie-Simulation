@@ -38,7 +38,7 @@ public:
         return firstName + " " + lastName;
     }
 
-    void addMovie(Movie movie)
+    void addMovie(Movie* movie)
     {
         rentedMovies.push_back(movie);
     }
