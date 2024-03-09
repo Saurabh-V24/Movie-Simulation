@@ -9,7 +9,6 @@ Inventory::~Inventory()
     
 }
 
-
 void Inventory::buildInventory(string const &movie)
 {
     ifstream movies(movie);

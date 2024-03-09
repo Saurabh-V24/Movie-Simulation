@@ -1,10 +1,8 @@
-#ifndef Drama_h
-#define Drama_h
+#ifndef DRAMA_H
+#define DRAMA_H
 
 #include <string>
 #include <fstream>
-#ifndef DRAMA_H
-#define DRAMA_H
 #include "Movie.h"
 using namespace std;
 

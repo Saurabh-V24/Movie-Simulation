@@ -18,20 +18,21 @@ class Inventory
 public:
     Inventory();
     ~Inventory();
-    
+
     void buildInventory(string const &movie);
-    
+
     void viewingClassic();
     void viewingComedy();
     void viewingDrama();
     void viewingInventory();
-    
+
     bool searchingClassic(int month, int year, string title, Movie *&movie);
     bool searchingComedy(string title, int releaseYear, Movie *&movie);
     bool searchingDrama(string director, string title, Movie *&movie);
+
 private:
     vector<Classic> classic;
     vector<Comedy> comedy;
-    vector<Drama> drama;      
+    vector<Drama> drama;
 };
-#endif 
+#endif

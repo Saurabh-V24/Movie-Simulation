@@ -33,7 +33,8 @@ void Classic::buildingData(ifstream &file)
         string director;
         string title;
         string majorActor;
-    } movieData;
+    } 
+    movieData;
 
     string firstName;
     string lastName;
