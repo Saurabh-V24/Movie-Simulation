@@ -93,15 +93,39 @@ void Inventory::viewingDrama()
 
 void Inventory::viewingInventory()
 {
+    for(int i = 0; i < 95; i++)
+    {
+        cout<< "-";
+    }
+    cout<<endl;
     cout << "Movie Inventory" << endl;
+
     cout << " Comedies:" << endl;
     viewingComedy();
+
+    for(int i = 0; i < 95; i++)
+    {
+        cout<< "-";
+    }
+    cout<<endl;
+
     
     cout << " Dramas:" << endl;
     viewingDrama();
+
+    for(int i = 0; i < 95; i++)
+    {
+        cout<< "-";
+    }
+    cout<<endl;
     
     cout << " Classics:" << endl;
     viewingClassic();
+    for(int i = 0; i < 95; i++)
+    {
+        cout<< "-";
+    }
+    cout<<endl;
 }
 
 bool Inventory::searchingClassic(int releaseMonth, int releaseYear, string majorActor, Movie *&movie)
@@ -168,18 +192,19 @@ int main() {
 
     // Replace "movies.txt" with the actual name of your movie file
     inventory.buildInventory("data4movies.txt");
+    inventory.viewingInventory();
 
-    // Display all Drama movies
-    cout << "Drama Movies:" << endl;
-    inventory.viewingDrama();
+    // // Display all Drama movies
+    // cout << "Drama Movies:" << endl;
+    // inventory.viewingDrama();
 
-    // Display all Classic movies
-    cout << "Classic Movies:" << endl;
-    inventory.viewingClassic();
+    // // Display all Classic movies
+    // cout << "Classic Movies:" << endl;
+    // inventory.viewingClassic();
 
-    // Display all Comedy movies
-    cout << "Comedy Movies:" << endl;
-    inventory.viewingComedy();
+    // // Display all Comedy movies
+    // cout << "Comedy Movies:" << endl;
+    // inventory.viewingComedy();
 
     // Example of searching and displaying a Drama movie
 
