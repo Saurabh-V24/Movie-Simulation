@@ -9,18 +9,11 @@ using namespace std;
 class Comedy : public Movie
 {
 public:
-    Comedy();
-    Comedy(int stock, string director, string title, int yearReleased);
+    Comedy(char genre, char typeOfMovie, string title, string director, int stock, int yearReleased);
     ~Comedy();
-
-    void buildingData(ifstream &file);
-
-    void display();
-
-    bool operator==(const Movie &) const;
-    bool operator!=(const Movie &) const;
-    bool operator>(const Movie &) const;
-    bool operator<(const Movie &) const;
-    Movie *operator=(const Movie &);
+    virtual bool operator==(const Movie& ) const;
+    virtual bool operator!=(const Movie& ) const;
+    virtual bool operator>(const Movie& ) const;
+    virtual bool operator<(const Movie& ) const;
 };
-#endif
+#endif 

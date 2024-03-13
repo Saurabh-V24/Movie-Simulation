@@ -3,33 +3,37 @@
 
 #include <string>
 #include <fstream>
+#include <iomanip>
+#include <vector>
 #include "Movie.h"
 using namespace std;
 
 class Classic : public Movie
 {
 public:
-    Classic();
-    Classic(int stock, string director, string title, string majorActor, int monthReleased, int yearReleased);
+    Classic(char typeOfMovie, char media, string title, string director, int stock, int yearReleased, int month, string majorActor);
     ~Classic();
+    
+    virtual string getMajorActor()const;
+    virtual int getReleaseMonth()const;
+    int getDupStock() const; 
+    virtual void addDupMovies(Movie*&);
 
-    void buildingData(ifstream &file);
-    void setMajorActor(string majorActor);
-    bool setReleaseMonth(int month);
+    virtual bool decreaseStock(int);
+    
 
-    string getMajorActor() const;
-    int getReleaseMonth() const;
-
-    void display();
-    bool operator==(const Movie &) const;
-    bool operator!=(const Movie &) const;
-    bool operator>(const Movie &) const;
-    bool operator<(const Movie &) const;
-    Movie *operator=(const Movie &);
-
+    int collectingStock() const;
+    virtual void display();
+    virtual bool operator==(const Movie& ) const;
+    virtual bool operator!=(const Movie& ) const;
+    virtual bool operator>(const Movie& ) const;
+    virtual bool operator<(const Movie& ) const;
+    
 private:
+    vector<Movie*> dupMovies;
     string majorActor;
-    int releaseMonth;
+    int month;
+    
 };
 
-#endif
+#endif 

@@ -6,13 +6,14 @@ Business::Business()
 
 Business::Business(string const &file)
 {
+
     movie.buildInventory(file);
 }
 
 Business::~Business()
 {
+    
 }
-
 void Business::buildCustomer(const string &filename)
 {
     // open the file
@@ -34,7 +35,7 @@ void Business::buildCustomer(const string &filename)
         // check if file is formatted
         if (!(split >> customerID >> lastName >> firstName))
         {
-            cerr << "Error reading line: " << line << std::endl;
+            cerr << "Error reading line: " << line << endl;
             continue;
         }
         // check if customerID is already in system
