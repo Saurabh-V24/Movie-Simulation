@@ -34,7 +34,6 @@ void Comedy::buildingData(ifstream &file)
     file >> movieData.stock;
     file.ignore(2);
     getline(file, movieData.director, ',');
-    file.ignore(1);
     getline(file, movieData.title, ',');
     file >> movieData.releaseYear;
 
@@ -42,6 +41,7 @@ void Comedy::buildingData(ifstream &file)
     setDirector(movieData.director);
     setTitle(movieData.title);
     setReleaseYear(movieData.releaseYear);
+    
 }
 
 bool Comedy::operator==(const Movie &other) const
