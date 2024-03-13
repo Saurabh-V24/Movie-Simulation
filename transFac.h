@@ -15,7 +15,7 @@
 #include "Return.h"
 #include "Inventory.h"
 #include "History.h"
-#include "movie.h"
+#include "Movie.h"
 #include "HashTable.h"
 #include "customer.h"
 #include <sstream>
