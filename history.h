@@ -17,6 +17,8 @@
 #ifndef HISTORY_H
 #define HISTORY_H
 #include "transaction.h"
+#include "customer.h"
+#include "HashTable.h"
 #include <iostream>
 #include <string>
 
@@ -26,7 +28,8 @@ public:
     History(int customerID);
     virtual ~History();
 
-    virtual bool doTrans(Customer&);
+    virtual bool doTrans(HashTable *customerTable);
+
 private:
     int customerID;
 };

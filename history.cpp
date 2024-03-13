@@ -41,11 +41,17 @@ History::~History()
  * precondition: none
  * postcondition: displays the customer's transaction history
  */
-bool History::doTrans(Customer &customer)
+bool History::doTrans(HashTable *customerTable)
 {
-    customer.getHistory();
+    // get customer
+    if (!customerTable->customerExists(to_string(customerID)))
+    {
+        cout << "ERROR: History Transaction Failed -- "
+             << "Customer " << customerID << " does not exist" << endl;
+        return false;
+    }
+    Customer *customer = customerTable->search(to_string(customerID));
+    customer->getHistory();
     return true;
 }
 // end of doTrans
-
-// // end of doTrans
