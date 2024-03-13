@@ -4,9 +4,11 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include <string>
 #include <fstream>
 
 #include "Movie.h"
+#include "MovieBST.h"
 #include "classic.h"
 #include "Comedy.h"
 #include "Drama.h"
@@ -19,20 +21,16 @@ public:
     Inventory();
     ~Inventory();
 
-    void buildInventory(string const &movie);
+    Movie* getMovie(Movie*);
+    void viewInventory();
+    bool doesMovieExist(Movie*);
+    Movie* getMovieByTitle(int, string, int);
 
-    void viewingClassic();
-    void viewingComedy();
-    void viewingDrama();
-    void viewingInventory();
-
-    bool searchingClassic(int month, int year, string title, Movie *&movie);
-    bool searchingComedy(string title, int releaseYear, Movie *&movie);
-    bool searchingDrama(string director, string title, Movie *&movie);
-
+    bool addingMovie(Movie*& );
+    // bool borrowingMovie(Movie *, string&);
+    // bool returningMovie(Movie*, string&);
+    void combineMovie(Movie*, int);
 private:
-    vector<Classic> classic;
-    vector<Comedy> comedy;
-    vector<Drama> drama;
+    vector<MovieBST> typeOfMovie;
 };
 #endif
