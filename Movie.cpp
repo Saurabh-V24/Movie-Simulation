@@ -2,88 +2,34 @@
 
 Movie::Movie()
 {
-    typeOfMovie = ' ';
-    stock = 0;
-    director = "";
-    title = "";
-    yearReleased = 0;
 }
 
-Movie::Movie(char movieType, int stock, string director, string title, int yearReleased)
+Movie::Movie(char typeOfMovie, char media, string title, string director, int stock, int yearReleased)
 {
-    setTypeOfMovie(movieType);
-    setStock(stock);
-    setDirector(director);
-    setTitle(title);
-    setReleaseYear(yearReleased);
+   this->typeOfMovie = typeOfMovie;
+   this->media = media;
+   this->title = title;
+   this->director = director;
+   this->stock = stock;
+   this->yearReleased = yearReleased;
+   this->preventDouble = false;
 }
 
-Movie::~Movie() {}
+Movie::~Movie(){}
 
-void Movie::buildingData(ifstream &file)
+string Movie::infoOfMovie(string titleAndDirector)const
 {
-    struct MovieData
-    {
-        int stock;
-        int releaseYear;
-        string director;
-        string title;
-    } movieData;
-
-    file.ignore(1);
-    file >> movieData.stock;
-    file.ignore(2);
-    getline(file, movieData.director, ',');
-    file.ignore(1);
-    getline(file, movieData.title, ',');
-    file >> movieData.releaseYear;
-
-    setStock(movieData.stock);
-    setDirector(movieData.director);
-    setTitle(movieData.title);
-    setReleaseYear(movieData.releaseYear);
-}
-
-void Movie::setTypeOfMovie(char typeOfMovie)
-{
-    this->typeOfMovie = typeOfMovie;
-}
-
-void Movie::setStock(int stock)
-{
-    this->stock = stock;
-}
-
-void Movie::setDirector(string director)
-{
-    this->director = director;
-}
-
-void Movie::setTitle(string title)
-{
-    this->title = title;
-}
-
-void Movie::setReleaseYear(int yearReleased)
-{
-    this->yearReleased = yearReleased;
-}
-
-void Movie::setMajorActor(string majorActor) {}
-
-bool Movie::setReleaseMonth(int month)
-{
-    if (month < 1)
-    {
-        return false;
-    }
-
-    return true;
+    titleAndDirector = title + " by " + director;
+    return titleAndDirector;
 }
 
 char Movie::getTypeOfMovie() const
 {
     return typeOfMovie;
+}
+char Movie::getMedia() const
+{
+    return media;
 }
 
 int Movie::getStock() const
@@ -116,29 +62,59 @@ int Movie::getReleaseMonth() const
     return 0;
 }
 
-bool Movie::increaseStock()
+bool Movie::increaseStock(int other)
 {
-    stock++;
+    stock += other;
     return true;
 }
 
-bool Movie::decreaseStock()
+bool Movie::decreaseStock(int other)
 {
-    if (stock == 0)
+    if(stock > 0 && stock >= other)
+    {
+        stock-=other;
+        return true;
+    }
+    else
     {
         return false;
     }
-
-    stock--;
-    return true;
 }
 
-Movie *Movie::operator=(const Movie &c)
-{
-    return this;
+void Movie::manageClassicStock(bool stockCount){
+    preventDouble = stockCount;
+}
+
+bool Movie::statusOfClassicMovie() const{
+    return preventDouble;
+}
+
+void Movie::duplicateMovies(Movie *& other){
+
+}
+
+bool Movie::operator==(const Movie& other){
+    if(this -> title == other.title && this->yearReleased == other.getReleaseYear()){
+        return true;
+    }
+    else{
+        return false; 
+    }
+}
+
+bool Movie::operator!=(const Movie& other){
+    return !(*this == other);
+}
+
+bool Movie::operator<(const Movie& other){
+    return this->yearReleased < other.getReleaseYear();
+}
+bool Movie::operator>(const Movie& other){
+    return this->yearReleased > other.getReleaseYear();
 }
 
 void Movie::display() const
 {
-    cout << getTypeOfMovie() << " " << getStock() << " " << getDirector() << " " << getTitle() << " " << getReleaseYear() << endl;
+    cout << setw(5) << getTypeOfMovie() << setw(5) << getMedia() << setw(5) << getTitle() 
+    << setw(5) << getDirector() << setw(5) << getReleaseYear() << setw(5) << getStock() <<endl;
 }

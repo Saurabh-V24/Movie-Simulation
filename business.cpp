@@ -3,6 +3,7 @@
 Business::Business()
 {
 }
+
 Business::Business(string const &file)
 {
 
@@ -11,6 +12,7 @@ Business::Business(string const &file)
 
 Business::~Business()
 {
+    
 }
 void Business::buildCustomer(const string &filename)
 {
@@ -249,7 +251,7 @@ void Business::borrowCommand(ifstream &commandsFile, Customer *customer, char mo
             }
             else
             {
-                cerr << "ERROR: Borrow cannot occur" << endl;
+                cerr << "ERROR: Borrow cannot occur"  << endl;
                 delete type;
                 type = nullptr;
             }
@@ -262,6 +264,8 @@ void Business::borrowCommand(ifstream &commandsFile, Customer *customer, char mo
     }
     }
 }
+
+
 
     // int main() {
     //     Business business;

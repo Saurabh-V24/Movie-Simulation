@@ -4,41 +4,43 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <iomanip>
 using namespace std;
+
+struct nodeActor{
+    string majorActor;
+    int stock;
+    nodeActor* next;
+};
 
 class Movie
 {
 public:
     Movie();
-    Movie(char movieType, int stock, string director, string title, int yearReleased);
-    ~Movie();
+    Movie(char typeOfMovie, char media, string title, string director, int stock, int yearReleased);
+    virtual ~Movie();
     
-    virtual void buildingData(ifstream &file);
-    virtual void setTypeOfMovie(char movieType);
-    virtual void setStock(int stock);
-    virtual void setDirector(string director);
-    virtual void setTitle(string title);
-    virtual void setReleaseYear(int releaseYear);
-    virtual void setMajorActor(string majorActor);
-    virtual bool setReleaseMonth(int month);
-    
-
-    virtual char getTypeOfMovie() const;
-    virtual int getStock() const;
-    virtual string getDirector() const;
-    virtual string getTitle() const;
-    virtual int getReleaseYear()const;
+    char getTypeOfMovie() const;
+    char getMedia() const;
+    int getStock() const;
+    string getDirector() const;
+    string getTitle() const;
+    int getReleaseYear()const;
     virtual string getMajorActor()const;
-    virtual int getReleaseMonth()const;
-    
-    virtual bool increaseStock();
-    virtual bool decreaseStock();
 
-    // virtual bool operator==(const Movie& )const = 0;
-    // virtual bool operator!=(const Movie& )const = 0;
-    // virtual bool operator>(const Movie& )const = 0;
-    // virtual bool operator<(const Movie& )const = 0;
-    virtual Movie* operator=(const Movie& );
+    virtual int getReleaseMonth()const;
+    string infoOfMovie(string ) const;
+    void manageClassicStock(bool );
+    bool statusOfClassicMovie() const;
+    
+    bool increaseStock(int );
+    bool decreaseStock(int );
+    virtual void duplicateMovies(Movie*&);
+
+    virtual bool operator==(const Movie& );
+    virtual bool operator!=(const Movie& );
+    virtual bool operator>(const Movie& );
+    virtual bool operator<(const Movie& );
     virtual void display()const;
     
 protected:
@@ -47,6 +49,8 @@ protected:
     string director;
     string title;
     int yearReleased;
+    char media;
+    bool preventDouble;
 
 };
 #endif

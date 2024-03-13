@@ -1,5 +1,5 @@
-#ifndef DRAMA_H
-#define DRAMA_H
+#ifndef Drama_H
+#define Drama_H
 
 #include <string>
 #include <fstream>
@@ -9,18 +9,11 @@ using namespace std;
 class Drama : public Movie
 {
 public:
-    Drama();
-    Drama(int stock, string director, string title, int yearReleased);
-    ~Drama();
-    
-    void buildingData(ifstream &file);
-    
-    void display();
-    
-    bool operator==(const Movie& ) const;
-    bool operator!=(const Movie& ) const;
-    bool operator>(const Movie& ) const;
-    bool operator<(const Movie& ) const;
-    Movie* operator=(const Movie& );
+    Drama(char typeOfMovie, char media, string title, string director, int stock, int year);
+    ~Drama();    
+    virtual bool operator==(const Movie& ) const;
+    virtual bool operator!=(const Movie& ) const;
+    virtual bool operator>(const Movie& ) const;
+    virtual bool operator<(const Movie& ) const;
 };
 #endif 
