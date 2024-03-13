@@ -4,10 +4,16 @@ Business::Business()
 {
 }
 
-Business::~Business()
+Business::Business(string const &file)
 {
+
+    movie.buildInventory(file);
 }
 
+Business::~Business()
+{
+    
+}
 void Business::buildCustomer(const string &filename)
 {
     // open the file
@@ -29,7 +35,7 @@ void Business::buildCustomer(const string &filename)
         // check if file is formatted
         if (!(split >> customerID >> lastName >> firstName))
         {
-            cerr << "Error reading line: " << line << std::endl;
+            cerr << "Error reading line: " << line << endl;
             continue;
         }
         // check if customerID is already in system
@@ -48,41 +54,6 @@ Customer *Business::getCustomer(int customerID)
     return customers.search(to_string(customerID));
 }
 
-int main()
-{
-    Business business;
-
-    business.buildCustomer("data4customers.txt");
-
-    // look for customers in business
-
-    Customer *porky = business.getCustomer(8888);
-    Customer *daffy = business.getCustomer(9999);
-    Customer *mickey = business.getCustomer(1111);
-
-    if (porky != nullptr)
-    {
-        cout << "Test passed: Found customer 8888\n";
-    }
-    else
-    {
-        cout << "Test failed: Could not find customer 8888\n";
-    }
-
-    if (daffy != nullptr)
-    {
-        cout << "Test passed: Found customer 9999\n";
-    }
-    else
-    {
-        cout << "Test failed\n";
-    }
-
-    if (mickey != nullptr)
-    {
-        cout << "Test passed: Found customer 1111\n";
-    }
-}
 void Business::runningCommands(const string &data)
 {
     ifstream file(data);
@@ -280,7 +251,7 @@ void Business::borrowCommand(ifstream &commandsFile, Customer *customer, char mo
             }
             else
             {
-                cerr << "ERROR: Borrow cannot occur" << endl;
+                cerr << "ERROR: Borrow cannot occur"  << endl;
                 delete type;
                 type = nullptr;
             }
@@ -293,6 +264,8 @@ void Business::borrowCommand(ifstream &commandsFile, Customer *customer, char mo
     }
     }
 }
+
+
 
     // int main() {
     //     Business business;
