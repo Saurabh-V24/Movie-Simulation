@@ -13,9 +13,9 @@
 #include "transaction.h"
 #include "Borrow.h"
 #include "Return.h"
-#include "Inventory.h"
-#include "History.h"
-#include "movie.h"
+#include "inventory.h"
+#include "history.h"
+#include "Movie.h"
 #include "HashTable.h"
 #include "customer.h"
 #include <sstream>
