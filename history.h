@@ -28,7 +28,7 @@ public:
     History(int customerID);
     virtual ~History();
 
-    virtual bool doTrans(HashTable *customerTable);
+    virtual bool doTrans(Customer* customer);
 
 private:
     int customerID;

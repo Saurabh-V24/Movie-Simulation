@@ -17,6 +17,7 @@
 #include "HashTable.h"
 #include "transaction.h"
 #include "customer.h"
+#include "history.h"
 #include <string>
 #include <fstream>
 #include <iostream>
@@ -27,9 +28,8 @@ using namespace std;
 class Business
 {
 private:
-    
     HashTable customers;
-    Inventory movie; 
+    Inventory movie;
 
 public:
     Business();
@@ -37,11 +37,7 @@ public:
     ~Business();
 
     void buildCustomer(const string &filename);
-    Customer *getCustomer(int customerID);
-    void runningCommands(string const &data);
-    void borrowCommand(ifstream& commandsFile, Customer* customer, char movieType);
-    void returnCommand(ifstream& file, char& typeOfMovie); 
-    void historyCommand(ifstream& file);
+    void readCommands(const string &file);
 };
 
 #endif

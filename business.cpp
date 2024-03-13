@@ -12,7 +12,6 @@ Business::Business(string const &file)
 
 Business::~Business()
 {
-    
 }
 void Business::buildCustomer(const string &filename)
 {
@@ -49,59 +48,78 @@ void Business::buildCustomer(const string &filename)
     inFile.close();
 }
 
-Customer *Business::getCustomer(int customerID)
+// reading commands
+void Business::readCommands(const string &file)
 {
-    return customers.search(to_string(customerID));
-}
-
-void Business::runningCommands(const string &data)
-{
-    ifstream file(data);
-    if (!file)
+    ifstream inFile;
+    inFile.open(file);
+    if (!inFile.is_open())
     {
-        cerr << "ERROR: Invalid file" << endl;
-        return;
+        cerr << "Unable to open file: " << file << endl;
     }
 
     string line;
-    while (!file.eof())
+    while (getline(inFile, line))
     {
-        char typeOfCommand;
-        char typeOfMovie;
-        file >> typeOfCommand;
-
-        switch (typeOfCommand)
+        istringstream split(line);
+        char command;
+        split >> command;
+        // check if command is valid
+        if (command != 'B' && command != 'R' && command != 'I' && command != 'H')
         {
-        case 'B':
+            cerr << "Invalid command: " << command << endl;
+            continue;
+        }
+
+        // process transaction
+        if (command == 'B')
         {
             int customerID;
-            file >> customerID;
-            Customer *customer = getCustomer(customerID);
-            if (customer == NULL)
-            {
-                cerr << "ERROR: Customer " << customerID << " does not exist" << endl;
-                continue;
-            }
-            char format;
-            file >> format;
-            file >> typeOfMovie;
-            borrowCommand(file, customer, typeOfMovie);
-            break;
+            string mediaType, movieType;
+            int releaseYear;
+            string title;
+            split >> customerID >> mediaType >> movieType >> releaseYear;
+            getline(split, title);
+            title = title.substr(1);
+            // get customer from hashtable
+            Customer *customer = customers.search(to_string(customerID));
+            // get movie from inventory
+            Movie *movie = movie.search(mediaType, movieType, releaseYear, title);
+            Transaction *borrow = new Borrow(customer, movie);
+            // does specified transaction
+            borrow->doTrans();
         }
-        case 'R':
-            // returnCommand(file, typeOfMovie);
-            break;
-        case 'I':
-            movie.viewingInventory();
-            break;
-        case 'H':
-            // historyCommand(file);
-            break;
-        default:
-            cerr << "ERROR: Invalid command type " << typeOfCommand << endl;
+        else if (command == 'R')
+        {
+            int customerID;
+            string mediaType, movieType;
+            int releaseYear;
+            string title;
+            split >> customerID >> mediaType >> movieType >> releaseYear;
+            getline(split, title);
+            title = title.substr(1);
+            // get customer from hashtable
+            Customer *customer = customers.search(to_string(customerID));
+            // get movie from inventory
+            Movie *movie = movie.search(mediaType, movieType, releaseYear, title);
+            Transaction *returnTrans = new Return(customer, movie);
+            // does specified transaction
+            returnTrans->doTrans();
         }
-        getline(file, line);
+        else if (command == 'H')
+        {
+            // call history transaction
+            int customerID;
+            split >> customerID;
+            Customer *customer = customers.search(to_string(customerID));
+            Transaction *history = new History(customerID);
+            history->doTrans(); // Remove the unnecessary argument
+        }
     }
-    file.close();
 }
 
+/**
+ * processTransaction: processes the transaction
+ * precondition: none
+ * postcondition: processes the transaction
+ */
