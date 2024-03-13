@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include "transaction.h"
 
 using namespace std;
 
@@ -11,10 +12,11 @@ private:
     string firstName;
     string lastName;
     int customerID;
-    vector<Movie *> rentedMovies;
-    vector<string> transactions;
+    vector<Movie*> rentedMovies;
+    // vector<Transaction*> transactions;
 
 public:
+    vector<Transaction*> transactions;
     Customer();
     ~Customer();
     Customer(int id, string lastName, string firstName);
@@ -29,7 +31,9 @@ public:
 
     void addMovie(Movie *movie);
 
-    void addTransaction(string transaction);
+    bool addTransaction(Transaction *type);
+
+    // void addTransaction(string transaction);
 
     void getHistory() const;
 };

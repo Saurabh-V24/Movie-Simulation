@@ -22,33 +22,32 @@ void Inventory::buildInventory(string const &movie)
 
         switch (movieType)
         {
-        case 'C':
-        {
-            Classic *c = new Classic();
-            c->buildingData(movies);
-            classic.push_back(*c);
-            break;
-        }
-        case 'F':
-        {
-            Comedy *f = new Comedy();
-            f->buildingData(movies);
-            comedy.push_back(*f);
-            break;
-        }
-        case 'D':
-        {
-            Drama *d = new Drama();
-            d->buildingData(movies);
-            drama.push_back(*d);
-            break;
-        }
-        default:
-        {
-            cerr << "ERROR: Invalid movie " << movieType << endl;
-            movies.ignore(100, '\n');
-            break;
-        }
+            case 'C':
+            {
+                Classic *c = new Classic();
+                c->buildingData(movies);
+                classic.push_back(*c);
+                break;
+            }
+            case 'F':
+            {
+                Comedy *f = new Comedy();
+                f->buildingData(movies);
+                comedy.push_back(*f);
+                break;
+            }
+            case 'D':
+            {
+                Drama *d = new Drama();
+                d->buildingData(movies);
+                drama.push_back(*d);
+                break;
+            }
+            default:{
+                cerr << "ERROR: " << movieType << " Invalid Genre. Try Again. " << endl;
+                movies.ignore(100, '\n');
+                break;
+            }
         }
     }
     movies.close();
@@ -123,7 +122,7 @@ bool Inventory::searchingClassic(int releaseMonth, int releaseYear, string major
             return true;
         }
     }
-    cerr << "ERROR: Movie not found " << endl;
+    // cerr << "ERROR: Movie not found " << endl;
     return false;
 }
 
@@ -142,7 +141,7 @@ bool Inventory::searchingComedy(string title, int releaseYear, Movie *&movie)
             return true;
         }
     }
-    cerr << "ERROR: Movie is not found" << endl;
+    // cerr << "ERROR: Movie is not found" << endl;
     return false;
 }
 
@@ -161,32 +160,33 @@ bool Inventory::searchingDrama(string director, string title, Movie *&movie)
             return true;
         }
     }
-    cerr << "ERROR: Movie is not found" << endl;
+    // cerr << "ERROR: Movie is not found" << endl;
     return false;
 }
 
-int main()
-{
-    // testing the inventory class
-    Inventory inventory;
 
-    // Replace "movies.txt" with the actual name of your movie file
-    inventory.buildInventory("data4movies.txt");
-    inventory.viewingInventory();
+// int main() {
+//     // testing the inventory class
+//     Inventory inventory;
 
-    // // Display all Drama movies
-    // cout << "Drama Movies:" << endl;
-    // inventory.viewingDrama();
+//     // Replace "movies.txt" with the actual name of your movie file
+//     inventory.buildInventory("data4movies.txt");
+//     inventory.viewingInventory();
 
-    // // Display all Classic movies
-    // cout << "Classic Movies:" << endl;
-    // inventory.viewingClassic();
+//     // // Display all Drama movies
+//     // cout << "Drama Movies:" << endl;
+//     // inventory.viewingDrama();
 
-    // // Display all Comedy movies
-    // cout << "Comedy Movies:" << endl;
-    // inventory.viewingComedy();
+//     // // Display all Classic movies
+//     // cout << "Classic Movies:" << endl;
+//     // inventory.viewingClassic();
 
-    // Example of searching and displaying a Drama movie
+//     // // Display all Comedy movies
+//     // cout << "Comedy Movies:" << endl;
+//     // inventory.viewingComedy();
 
-    return 0;
-}
+//     // Example of searching and displaying a Drama movie
+
+//     return 0;
+    
+// }

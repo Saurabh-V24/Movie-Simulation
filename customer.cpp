@@ -43,18 +43,24 @@ void Customer::addMovie(Movie *movie)
     rentedMovies.push_back(movie);
 }
 
-void Customer::addTransaction(string transaction)
+// void Customer::addTransaction(string transaction)
+// {
+//     switch (transaction[0])
+//     {
+//     case 'B':
+//         transaction = "Borrowed " + transaction.substr(1);
+//         break;
+//     case 'R':
+//         transaction = "Returned " + transaction.substr(1);
+//         break;
+//     }
+//     transactions.push_back(transaction);
+// }
+
+bool Customer::addTransaction(Transaction *type)
 {
-    switch (transaction[0])
-    {
-    case 'B':
-        transaction = "Borrowed " + transaction.substr(1);
-        break;
-    case 'R':
-        transaction = "Returned " + transaction.substr(1);
-        break;
-    }
-    transactions.push_back(transaction);
+    transactions.push_back(type);
+    return true;
 }
 
 void Customer::getHistory() const
