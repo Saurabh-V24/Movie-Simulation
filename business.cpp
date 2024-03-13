@@ -4,6 +4,11 @@ Business::Business()
 {
 }
 
+Business::Business(string const &file)
+{
+    movie.buildInventory(file);
+}
+
 Business::~Business()
 {
 }
@@ -48,41 +53,6 @@ Customer *Business::getCustomer(int customerID)
     return customers.search(to_string(customerID));
 }
 
-int main()
-{
-    Business business;
-
-    business.buildCustomer("data4customers.txt");
-
-    // look for customers in business
-
-    Customer *porky = business.getCustomer(8888);
-    Customer *daffy = business.getCustomer(9999);
-    Customer *mickey = business.getCustomer(1111);
-
-    if (porky != nullptr)
-    {
-        cout << "Test passed: Found customer 8888\n";
-    }
-    else
-    {
-        cout << "Test failed: Could not find customer 8888\n";
-    }
-
-    if (daffy != nullptr)
-    {
-        cout << "Test passed: Found customer 9999\n";
-    }
-    else
-    {
-        cout << "Test failed\n";
-    }
-
-    if (mickey != nullptr)
-    {
-        cout << "Test passed: Found customer 1111\n";
-    }
-}
 void Business::runningCommands(const string &data)
 {
     ifstream file(data);
@@ -136,10 +106,13 @@ void Business::runningCommands(const string &data)
 
 void Business::borrowCommand(ifstream &commandsFile, Customer *customer, char movieType)
 {
+    // switch statement to determine the type of movie to perform transaction on
     switch (movieType)
     {
+    // classic movie
     case 'C':
     {
+        // get attributes for movie to check if it exists
         int releaseMonth, releaseYear;
         commandsFile >> releaseMonth >> releaseYear;
 
@@ -149,47 +122,39 @@ void Business::borrowCommand(ifstream &commandsFile, Customer *customer, char mo
         string majorActor = firstName + " " + lastName;
 
         Movie *selection;
+        // Check if movie exists
         bool validMovie = movie.searchingClassic(releaseMonth, releaseYear, majorActor, selection);
 
+        // if movie exists, perform transaction
         if (validMovie)
         {
+            // create transaction object
             Transaction *type = new Borrow('B', selection);
             Movie *selection = type->getMovie();
-
-            int numBorrowed = 0;
-            int numReturned = 0;
-
-            for (int i = 0; i < customer->transactions.size(); i++)
+            // check if stock is available
+            if (selection->getStock() > 0)
             {
-                if (movieType == selection->getTypeOfMovie())
-                {
-                    if (customer->transactions[i]->getMovie() == selection)
-                    {
-                        if (customer->transactions[i]->getTransactionType() == 'B')
-                        {
-                            numBorrowed++;
-                        }
-                        else if (customer->transactions[i]->getTransactionType() == 'R')
-                        {
-                            numReturned++;
-                        }
-                    }
-                }
-            }
-            if (numBorrowed == numReturned)
-            {
+                // stock is updated
                 type->doTrans();
+                // transaction is added to customer's transaction history
                 customer->addTransaction(type);
             }
+            // not enough movies in stock
             else
             {
-                cerr << "ERROR: Borrow cannot occur" << endl;
+                cerr << "ERROR: Borrow Transaction Failed -- Not enough in the Stock " << endl;
                 delete type;
                 type = nullptr;
             }
         }
+        // movie does not exist, throw error
+        else
+        {
+            cerr << "ERROR: Borrow Transaction Failed -- Movie does not Exist in the Inventory " << endl;
+        }
         break;
     }
+    // drama movie
     case 'D':
     {
         string director, title;
@@ -201,43 +166,33 @@ void Business::borrowCommand(ifstream &commandsFile, Customer *customer, char mo
 
         if (validMovie)
         {
+            // create transaction object
             Transaction *type = new Borrow('B', selection);
             Movie *selection = type->getMovie();
-
-            int numBorrowed = 0;
-            int numReturned = 0;
-
-            for (int i = 0; i < customer->transactions.size(); i++)
+            // check if stock is available
+            if (selection->getStock() > 0)
             {
-                if (movieType == selection->getTypeOfMovie())
-                {
-                    if (customer->transactions[i]->getMovie() == selection)
-                    {
-                        if (customer->transactions[i]->getTransactionType() == 'B')
-                        {
-                            numBorrowed++;
-                        }
-                        else if (customer->transactions[i]->getTransactionType() == 'R')
-                        {
-                            numReturned++;
-                        }
-                    }
-                }
-            }
-            if (numBorrowed == numReturned) // Possibly the issue
-            {
+                // stock is updated
                 type->doTrans();
+                // transaction is added to customer's transaction history
                 customer->addTransaction(type);
             }
+            // not enough movies in stock
             else
             {
-                cerr << "ERROR: Borrow cannot occur" << endl;
+                cerr << "ERROR: Borrow Transaction Failed -- Not enough in the Stock " << endl;
                 delete type;
                 type = nullptr;
             }
         }
+        // movie does not exist, throw error
+        else
+        {
+            cerr << "ERROR: Borrow Transaction Failed -- Movie does not Exist in the Inventory " << endl;
+        }
         break;
     }
+
     case 'F':
     {
         string title;
@@ -250,40 +205,29 @@ void Business::borrowCommand(ifstream &commandsFile, Customer *customer, char mo
 
         if (validMovie)
         {
+            // create transaction object
             Transaction *type = new Borrow('B', selection);
             Movie *selection = type->getMovie();
-
-            int numBorrowed = 0;
-            int numReturned = 0;
-
-            for (int i = 0; i < customer->transactions.size(); i++)
+            // check if stock is available
+            if (selection->getStock() > 0)
             {
-                if (movieType == selection->getTypeOfMovie())
-                {
-                    if (customer->transactions[i]->getMovie() == selection)
-                    {
-                        if (customer->transactions[i]->getTransactionType() == 'B')
-                        {
-                            numBorrowed++;
-                        }
-                        else if (customer->transactions[i]->getTransactionType() == 'R')
-                        {
-                            numReturned++;
-                        }
-                    }
-                }
-            }
-            if (numBorrowed == numReturned)
-            {
+                // stock is updated
                 type->doTrans();
+                // transaction is added to customer's transaction history
                 customer->addTransaction(type);
             }
+            // not enough movies in stock
             else
             {
-                cerr << "ERROR: Borrow cannot occur" << endl;
+                cerr << "ERROR: Borrow Transaction Failed -- Not enough in the Stock " << endl;
                 delete type;
                 type = nullptr;
             }
+        }
+        // movie does not exist, throw error
+        else
+        {
+            cerr << "ERROR: Borrow Transaction Failed -- Movie does not Exist in the Inventory " << endl;
         }
         break;
     }
@@ -293,31 +237,3 @@ void Business::borrowCommand(ifstream &commandsFile, Customer *customer, char mo
     }
     }
 }
-
-    // int main() {
-    //     Business business;
-
-    //     business.buildCustomer("data4customers.txt");
-
-    //     // look for customers in business
-
-    //     Customer* porky = business.getCustomer(8888);
-    //     Customer* daffy = business.getCustomer(9999);
-    //     Customer* mickey = business.getCustomer(1111);
-
-    //     if (porky != nullptr) {
-    //         cout << "Test passed: Found customer 8888\n";
-    //     } else {
-    //         cout << "Test failed: Could not find customer 8888\n";
-    //     }
-
-    //     if (daffy != nullptr) {
-    //         cout << "Test passed: Found customer 9999\n";
-    //     } else {
-    //         cout << "Test failed\n";
-    //     }
-
-    //     if (mickey != nullptr) {
-    //         cout << "Test passed: Found customer 1111\n";
-    //     }
-    // }

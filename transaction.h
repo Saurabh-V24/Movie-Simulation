@@ -4,31 +4,31 @@
 #include <iostream>
 #include <string>
 #include "Movie.h"
+#include "customer.h"
+#include "HashTable.h";
 
 using namespace std;
+class Customer;
+class Movie;
+class HashTable;
 
 class Transaction
 {
 public:
+    // constructor
     Transaction();
-    Transaction(char typeOfTransaction, int customerID, Movie *movie);
-    ~Transaction();
-    
-    virtual void setCustomerID(int customerID);
-    virtual void setTypeOfTransaction(char transactionType);
-    virtual void setMovie(Movie *movie);
+    // destructor
+    virtual ~Transaction();
+    // does transaction
+    virtual bool doTrans();
+    // setting data will update the stock of the movie
+    // and update the customer history
+    virtual void setData();
+    // displays entire transaction
+    virtual string display();
 
-    virtual int getCustomerID()const;
-    virtual char getTransactionType()const;
-    virtual Movie* getMovie()const;
-    
-    virtual void doTrans(); 
-    virtual void display()const; 
-    
-protected:
-    int customerID;
-    char typeOfTransaction;
-    Movie *movie;
+private:
+    // type of transaction
+    char transType;
 };
-
 #endif

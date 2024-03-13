@@ -1,33 +1,53 @@
-#include <Return.h>
+#include "Return.h"
 
-Return::Return(){
-    setTypeOfTransaction('R');
+Return::Return(Customer *customer, Movie *movie)
+{
+    this->customer = customer;
+    this->movie = movie;
 }
 
-Return::Return(int customerID, Movie *movie){
-    setTypeOfTransaction('R');
-    setCustomerID(customerID);
-    setMovie(movie);
-}
+Return::~Return() {}
 
-Return::~Return(){
-    this->movie = nullptr;
-}
-
-void Return::doTrans(){
-    this->movie->increaseStock();
-}
-
-void Return::display()const{
-
-    if(this->movie->getTypeOfMovie() == 'C'){
-        cout << "Returned " << this->movie->getTitle() << "by " << this->movie->getDirector() << endl;
+/**
+ * doTrans: performs the return transaction
+ */
+bool Return::doTrans()
+{
+    // if the movie is not borrowed, return false
+    if (movie->getStock() <= 0)
+    {
+        return false;
     }
-    else if(this->movie->getTypeOfMovie() == 'F'){
-        cout << "Returned " << this->movie->getTitle() << "by " << this->movie->getDirector() << endl;
-    }
-    else{
-        cout << "Returned " << this->movie->getTitle() << "by " << this->movie->getDirector() << endl;
+    // if the movie is borrowed, return true
+    else
+    {
+        // increase stock by 1
+        setData();
+        return true;
     }
 }
+// end of doTrans
 
+/**
+ * setData: sets the data for the return transaction
+ * precondition: none
+ * postcondition: sets the data for the return transaction
+*/
+void Return::setData()
+{
+    // increase stock by 1
+    movie->increaseStock();
+    // add transaction to customer history
+    customer->addTransaction(this);
+}
+
+/**
+ * display: displays the return transaction
+ * precondition: none
+ * postcondition: displays the return transaction
+ */
+string Return::display()
+{
+    cout << "Returned: " << movie->getTitle() << " " << movie->getReleaseYear() << endl;
+}
+// end of display

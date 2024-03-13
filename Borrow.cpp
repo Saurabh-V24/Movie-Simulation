@@ -1,32 +1,41 @@
 using namespace std;
 #include "Borrow.h"
 
-Borrow::Borrow(){
-    setTypeOfTransaction('B');
+Borrow::Borrow(Customer *customer, Movie *movie)
+{
+    this->customer = customer;
+    this->movie = movie;
 }
 
-Borrow::Borrow(int customerID, Movie *movie){
-    setTypeOfTransaction('B');
-    setCustomerID(customerID);
-    setMovie(movie);
+Borrow::~Borrow()
+{
 }
 
-Borrow::~Borrow(){
-    this->movie = nullptr;
-}
-
-void Borrow::doTrans(){
+bool Borrow::doTrans(HashTable* customerTable)
+{
+    Customer *curr = customerTable->search(customer->getCustomerID());
+    // check if customer exists
+    if (customerTable->customerExists(customer->getCustomerID()) == false)
+    {
+        cout << "ERROR: Borrow Transaction Failed -- "
+             << "Customer " << customer->getCustomerID() << " does not exist" << endl;
+        // delete movie ptr after bad borrow
+        delete movie;
+        movie = nullptr;
+        return false;
+    }
+    if(movie->getStock() == 0){
+        cout << "ERROR: Borrow Transaction Failed -- "
+             << "Movie " << movie->getTitle() << " is out of stock" << endl;
+        // delete movie ptr after bad borrow
+        delete movie;
+        movie = nullptr;
+        return false;
+    }
+    // check if movie exists
     this->movie->decreaseStock();
 }
 
-void Borrow::display(){
-    if(this->movie->getTypeOfMovie() == 'C'){
-        cout << "Borrowed " << this->movie->getTitle() << "by " << this->movie->getDirector() << endl;
-    }
-    else if(this->movie->getTypeOfMovie() == 'F'){
-        cout << "Borrowed " << this->movie->getTitle() << "by " << this->movie->getDirector() << endl;
-    }
-    else{
-        cout << "Borrowed " << this->movie->getTitle() << "by " << this->movie->getDirector() << endl;
-    }
+string Borrow::display()
+{
 }

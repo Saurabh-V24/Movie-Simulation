@@ -6,12 +6,21 @@ using namespace std;
 #include <fstream>
 #include "transaction.h"
 
-class Borrow : public Transaction{
-public: 
-    Borrow();
-    Borrow(int customerID, Movie *movie);
-    ~Borrow();
-    void doTrans();
-    void display();
+class Customer;
+class Movie;
+class HashTable;
+
+class Borrow : public Transaction
+{
+public:
+    Borrow(Customer *customer, Movie *movie);
+    virtual ~Borrow();
+    virtual bool doTrans(HashTable*);
+    virtual void setData();
+    virtual string display();
+
+private:
+    Customer *customer;
+    Movie *movie;
 };
 #endif

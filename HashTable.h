@@ -6,10 +6,11 @@ using namespace std;
 
 class Customer;
 
-class HashTable {
+class HashTable
+{
 private:
     static const int HASH_SIZE = 10000;
-    array<Customer*, HASH_SIZE> customerTable;
+    array<Customer *, HASH_SIZE> customerTable;
     int hashFunction(const string &key);
 
 public:
@@ -19,5 +20,7 @@ public:
 
     void insert(const Customer &customer);
 
-    Customer* search(const string &customerID);
+    Customer *search(const string &customerID);
+
+    bool customerExists(const string &customerID);
 };

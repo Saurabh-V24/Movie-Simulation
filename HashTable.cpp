@@ -39,7 +39,7 @@ void HashTable::insert(const Customer &customer)
     customerTable[index] = new Customer(customer);
 }
 
-Customer* HashTable::search(const string &customerID)
+Customer *HashTable::search(const string &customerID)
 {
     int index = hashFunction(customerID);
     while (customerTable[index] != nullptr)
@@ -51,4 +51,9 @@ Customer* HashTable::search(const string &customerID)
         index = (index + 1) % HASH_SIZE;
     }
     return nullptr;
+}
+
+bool HashTable::customerExists(const string &customerID)
+{
+    return search(customerID) != nullptr;
 }

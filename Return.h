@@ -9,11 +9,18 @@ using namespace std;
 class Return : public Transaction
 {
 public:
-    Return();
-    Return(int customerID, Movie *movie);
-    ~Return();
-    
-    void doTrans();
-    void display()const;
+    Return(Customer *customerID, Movie *movie);
+    virtual ~Return();
+
+    // overrides transaction doTrans
+    virtual bool doTrans();
+    // overrides transaction setData
+    virtual void setData();
+    // displays the transaction type and the movie info
+    virtual string display();
+
+private:
+    Customer* customer;
+    Movie *movie;
 };
 #endif
