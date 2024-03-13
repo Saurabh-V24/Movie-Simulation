@@ -13,7 +13,7 @@ public:
     virtual ~Return();
 
     // overrides transaction doTrans
-    virtual bool doTrans();
+    virtual bool doTrans(HashTable *customerTable);
     // overrides transaction setData
     virtual void setData();
     // displays the transaction type and the movie info
