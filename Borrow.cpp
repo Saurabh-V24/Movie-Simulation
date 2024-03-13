@@ -1,5 +1,5 @@
 using namespace std;
-#include <Borrow.h>
+#include "Borrow.h"
 
 Borrow::Borrow(){
     setTypeOfTransaction('B');
@@ -19,7 +19,14 @@ void Borrow::doTrans(){
     this->movie->decreaseStock();
 }
 
-void Borrow::display()
-{
-    cout << "Borrowed " << this->movie->getTitle() << " by " << this->movie->getDirector() << endl;
+void Borrow::display(){
+    if(this->movie->getTypeOfMovie() == 'C'){
+        cout << "Borrowed " << this->movie->getTitle() << "by " << this->movie->getDirector() << endl;
+    }
+    else if(this->movie->getTypeOfMovie() == 'F'){
+        cout << "Borrowed " << this->movie->getTitle() << "by " << this->movie->getDirector() << endl;
+    }
+    else{
+        cout << "Borrowed " << this->movie->getTitle() << "by " << this->movie->getDirector() << endl;
+    }
 }

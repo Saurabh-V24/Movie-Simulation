@@ -47,7 +47,7 @@ void Inventory::buildInventory(string const &movie)
                 break;
             }
             default:{
-                cerr << "ERROR: Invalid movie " << movieType << endl;
+                cerr << "ERROR: " << movieType << " Invalid Genre. Try Again. " << endl;
                 movies.ignore(100, '\n');
                 break;
             }
@@ -142,7 +142,7 @@ bool Inventory::searchingClassic(int releaseMonth, int releaseYear, string major
                 return true;
         }
     }
-    cerr << "ERROR: Movie not found " << endl;
+    // cerr << "ERROR: Movie not found " << endl;
     return false;
 }
 
@@ -161,7 +161,7 @@ bool Inventory::searchingComedy(string title, int releaseYear, Movie *&movie)
             return true;
         }
     }
-    cerr << "ERROR: Movie is not found" << endl;
+    // cerr << "ERROR: Movie is not found" << endl;
     return false;
 }
 
@@ -181,33 +181,33 @@ bool Inventory::searchingDrama(string director, string title, Movie *&movie)
             return true;
         }
     }
-    cerr << "ERROR: Movie is not found" << endl;
+    // cerr << "ERROR: Movie is not found" << endl;
     return false;
 }
 
 
-int main() {
-    // testing the inventory class
-    Inventory inventory;
+// int main() {
+//     // testing the inventory class
+//     Inventory inventory;
 
-    // Replace "movies.txt" with the actual name of your movie file
-    inventory.buildInventory("data4movies.txt");
-    inventory.viewingInventory();
+//     // Replace "movies.txt" with the actual name of your movie file
+//     inventory.buildInventory("data4movies.txt");
+//     inventory.viewingInventory();
 
-    // // Display all Drama movies
-    // cout << "Drama Movies:" << endl;
-    // inventory.viewingDrama();
+//     // // Display all Drama movies
+//     // cout << "Drama Movies:" << endl;
+//     // inventory.viewingDrama();
 
-    // // Display all Classic movies
-    // cout << "Classic Movies:" << endl;
-    // inventory.viewingClassic();
+//     // // Display all Classic movies
+//     // cout << "Classic Movies:" << endl;
+//     // inventory.viewingClassic();
 
-    // // Display all Comedy movies
-    // cout << "Comedy Movies:" << endl;
-    // inventory.viewingComedy();
+//     // // Display all Comedy movies
+//     // cout << "Comedy Movies:" << endl;
+//     // inventory.viewingComedy();
 
-    // Example of searching and displaying a Drama movie
+//     // Example of searching and displaying a Drama movie
 
-    return 0;
+//     return 0;
     
-}
+// }
