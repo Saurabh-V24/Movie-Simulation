@@ -1,105 +1,98 @@
 #include "inventory.h"
 
-
-Inventory::Inventory(){}
-
+Inventory::Inventory() {}
 
 Inventory::~Inventory()
 {
-    
 }
 
 void Inventory::buildInventory(string const &movie)
 {
     ifstream movies(movie);
-    if(!movies)
+    if (!movies)
     {
         cerr << "ERROR: Invalid" << endl;
         return;
     }
-    while(!movies.eof())
+    while (!movies.eof())
     {
-  
+
         char movieType;
         movies >> movieType;
-        
-        switch(movieType)
+
+        switch (movieType)
         {
-            case 'C':
-            {
-                Classic *c = new Classic();
-                c->buildingData(movies);
-                classic.push_back(*c);
-                break;
-            }
-            case 'F':
-            {
-                Comedy *f = new Comedy();
-                f->buildingData(movies);
-                comedy.push_back(*f);
-                break;
-            }
-            case 'D':
-            {
-                Drama *d = new Drama();
-                d->buildingData(movies);
-                drama.push_back(*d);
-                break;
-            }
-            default:{
-                cerr << "ERROR: Invalid movie " << movieType << endl;
-                movies.ignore(100, '\n');
-                break;
-            }
+        case 'C':
+        {
+            Classic *c = new Classic();
+            c->buildingData(movies);
+            classic.push_back(*c);
+            break;
         }
-        
+        case 'F':
+        {
+            Comedy *f = new Comedy();
+            f->buildingData(movies);
+            comedy.push_back(*f);
+            break;
+        }
+        case 'D':
+        {
+            Drama *d = new Drama();
+            d->buildingData(movies);
+            drama.push_back(*d);
+            break;
+        }
+        default:
+        {
+            cerr << "ERROR: Invalid movie " << movieType << endl;
+            movies.ignore(100, '\n');
+            break;
+        }
+        }
     }
     movies.close();
 }
 
-
 void Inventory::viewingClassic()
 {
-    for(int i = 0;i < classic.size(); i++)
+    for (int i = 0; i < classic.size(); i++)
     {
         classic[i].display();
     }
-    
+
     cout << endl;
 }
-
 
 void Inventory::viewingComedy()
 {
-    for(int i = 0;i < comedy.size(); i++)
+    for (int i = 0; i < comedy.size(); i++)
     {
         comedy[i].display();
     }
-    
+
     cout << endl;
 }
-
 
 void Inventory::viewingDrama()
 {
-    for(int i = 0; i < drama.size(); i++)
+    for (int i = 0; i < drama.size(); i++)
     {
         drama[i].display();
     }
-    
+
     cout << endl;
 }
-
 
 void Inventory::viewingInventory()
 {
     cout << "Movie Inventory" << endl;
     cout << " Comedies:" << endl;
     viewingComedy();
-    
+
     cout << " Dramas:" << endl;
     viewingDrama();
-    
+
     cout << " Classics:" << endl;
     viewingClassic();
 }
@@ -108,14 +101,15 @@ bool Inventory::searchingClassic(int releaseMonth, int releaseYear, string major
 {
     for (int i = 0; i < classic.size(); i++)
     {
-        if (releaseMonth == classic[i].getReleaseMonth() && releaseYear == classic[i].getReleaseYear()
-            && majorActor == classic[i].getMajorActor()){
-                if (classic[i].getStock() == 0){
-                    cerr << "ERROR: Movie not in stock " << endl;
-                    return false;
-                }
-                movie = &classic[i];
-                return true;
+        if (releaseMonth == classic[i].getReleaseMonth() && releaseYear == classic[i].getReleaseYear() && majorActor == classic[i].getMajorActor())
+        {
+            if (classic[i].getStock() == 0)
+            {
+                cerr << "ERROR: Movie not in stock " << endl;
+                return false;
+            }
+            movie = &classic[i];
+            return true;
         }
     }
     cerr << "ERROR: Movie not found " << endl;
@@ -141,7 +135,6 @@ bool Inventory::searchingComedy(string title, int releaseYear, Movie *&movie)
     return false;
 }
 
-
 bool Inventory::searchingDrama(string director, string title, Movie *&movie)
 {
     for (int i = 0; i < drama.size(); i++)
@@ -161,8 +154,8 @@ bool Inventory::searchingDrama(string director, string title, Movie *&movie)
     return false;
 }
 
-
-int main() {
+int main()
+{
     // testing the inventory class
     Inventory inventory;
 
@@ -184,5 +177,4 @@ int main() {
     // Example of searching and displaying a Drama movie
 
     return 0;
-    
 }

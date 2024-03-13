@@ -12,15 +12,15 @@ public:
     Comedy();
     Comedy(int stock, string director, string title, int yearReleased);
     ~Comedy();
-    
+
     void buildingData(ifstream &file);
-    
+
     void display();
-    
-    bool operator==(const Movie& ) const;
-    bool operator!=(const Movie& ) const;
-    bool operator>(const Movie& ) const;
-    bool operator<(const Movie& ) const;
-    Movie* operator=(const Movie& );
+
+    bool operator==(const Movie &) const;
+    bool operator!=(const Movie &) const;
+    bool operator>(const Movie &) const;
+    bool operator<(const Movie &) const;
+    Movie *operator=(const Movie &);
 };
-#endif 
+#endif

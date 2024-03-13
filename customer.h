@@ -11,7 +11,7 @@ private:
     string firstName;
     string lastName;
     int customerID;
-    vector<Movie*> rentedMovies;
+    vector<Movie *> rentedMovies;
     vector<string> transactions;
 
 public:
@@ -24,10 +24,10 @@ public:
     string getFirstName() const;
 
     string getLastName() const;
-    
+
     string getFullName() const;
 
-    void addMovie(Movie* movie);
+    void addMovie(Movie *movie);
 
     void addTransaction(string transaction);
 

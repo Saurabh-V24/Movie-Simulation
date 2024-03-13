@@ -25,9 +25,9 @@ private:
 public:
     Business();
     ~Business();
-    
+
     void buildCustomer(const string &filename);
-    Customer* getCustomer(int customerID);
+    Customer *getCustomer(int customerID);
 };
 
 #endif

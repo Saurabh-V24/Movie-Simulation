@@ -11,9 +11,9 @@ Customer::Customer()
 
 Customer::~Customer() {}
 
-Customer::Customer(int id, string lastName, string firstName) 
+Customer::Customer(int id, string lastName, string firstName)
 {
-    customerID = id;             
+    customerID = id;
     this->lastName = lastName;   // 'this' pointer to differentiate between parameter and member variable
     this->firstName = firstName; // 'this' pointer to differentiate between parameter and member variable
 }
@@ -23,12 +23,12 @@ int Customer::getCustomerID() const // Add class scope
     return customerID;
 }
 
-string Customer::getFirstName() const 
+string Customer::getFirstName() const
 {
     return firstName;
 }
 
-string Customer::getLastName() const 
+string Customer::getLastName() const
 {
     return lastName;
 }

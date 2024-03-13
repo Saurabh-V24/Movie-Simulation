@@ -2,7 +2,6 @@
 #include "classic.h"
 using namespace std;
 
-
 Classic::Classic()
 {
     setTypeOfMovie('C');
@@ -21,20 +20,19 @@ Classic::Classic(int stock, string director, string title, string majorActor, in
 
 Classic::~Classic()
 {
-    
 }
 
 void Classic::buildingData(ifstream &file)
 {
-    struct MovieData {
+    struct MovieData
+    {
         int stock;
         int releaseMonth;
         int releaseYear;
         string director;
         string title;
         string majorActor;
-    } 
-    movieData;
+    } movieData;
 
     string firstName;
     string lastName;
@@ -57,46 +55,45 @@ void Classic::buildingData(ifstream &file)
     setReleaseYear(movieData.releaseYear);
 }
 
-
 void Classic::setMajorActor(string majorActor)
 {
     this->majorActor = majorActor;
 }
 
-string Classic::getMajorActor()const
+string Classic::getMajorActor() const
 {
     return this->majorActor;
 }
 
 bool Classic::setReleaseMonth(int month)
 {
-    if(month < 1)
+    if (month < 1)
     {
         return false;
     }
-    
+
     this->releaseMonth = month;
     return true;
 }
 
-int Classic::getReleaseMonth()const
+int Classic::getReleaseMonth() const
 {
     return this->releaseMonth;
 }
 
-bool Classic::operator==(const Movie& other)const
+bool Classic::operator==(const Movie &other) const
 {
-    if(getStock() == other.getStock())
+    if (getStock() == other.getStock())
     {
-        if(getDirector().compare(other.getDirector()) == 0)
+        if (getDirector().compare(other.getDirector()) == 0)
         {
-            if(getTitle().compare(other.getTitle()) == 0)
+            if (getTitle().compare(other.getTitle()) == 0)
             {
-                if(getReleaseMonth() == other.getReleaseMonth())
+                if (getReleaseMonth() == other.getReleaseMonth())
                 {
-                    if(getReleaseYear() == other.getReleaseYear())
+                    if (getReleaseYear() == other.getReleaseYear())
                     {
-                        if(getMajorActor().compare(other.getMajorActor()) == 0)
+                        if (getMajorActor().compare(other.getMajorActor()) == 0)
                         {
                             return true;
                         }
@@ -108,12 +105,12 @@ bool Classic::operator==(const Movie& other)const
     return false;
 }
 
-bool Classic::operator!=(const Movie& other)const
+bool Classic::operator!=(const Movie &other) const
 {
     return !(*this == other);
 }
 
-bool Classic::operator>(const Movie& other) const
+bool Classic::operator>(const Movie &other) const
 {
     if (getReleaseYear() > other.getReleaseYear())
     {
@@ -121,10 +118,10 @@ bool Classic::operator>(const Movie& other) const
     }
     else if (getReleaseYear() == other.getReleaseYear())
     {
-        
+
         if (getReleaseMonth() > other.getReleaseMonth())
         {
-            
+
             return true;
         }
         else if (getReleaseMonth() == other.getReleaseMonth())
@@ -134,12 +131,12 @@ bool Classic::operator>(const Movie& other) const
                 return true;
             }
             else
-            { 
+            {
                 return false;
             }
         }
         else
-        {  
+        {
             return false;
         }
     }
@@ -149,7 +146,7 @@ bool Classic::operator>(const Movie& other) const
     }
 }
 
-bool Classic::operator<(const Movie& other) const
+bool Classic::operator<(const Movie &other) const
 {
     if (getReleaseYear() < other.getReleaseYear())
     {
@@ -157,7 +154,7 @@ bool Classic::operator<(const Movie& other) const
     }
     else if (getReleaseYear() == other.getReleaseYear())
     {
-         
+
         if (getReleaseMonth() < other.getReleaseMonth())
         {
             return true;
@@ -172,8 +169,9 @@ bool Classic::operator<(const Movie& other) const
             {
                 return false;
             }
-         }
-        else{
+        }
+        else
+        {
             return false;
         }
     }
@@ -183,7 +181,8 @@ bool Classic::operator<(const Movie& other) const
     }
 }
 
-Movie* Classic::operator=(const Movie &c){
+Movie *Classic::operator=(const Movie &c)
+{
     setStock(c.getStock());
     setDirector(c.getDirector());
     setTitle(c.getTitle());
@@ -194,8 +193,8 @@ Movie* Classic::operator=(const Movie &c){
     return this;
 }
 
-void Classic::display(){
+void Classic::display()
+{
     cout << getTypeOfMovie() << " " << getStock() << " " << getDirector() << " " << getTitle()
-    << " " << getMajorActor() << " " << getReleaseMonth() << " " << getReleaseYear() << endl;
+         << " " << getMajorActor() << " " << getReleaseMonth() << " " << getReleaseYear() << endl;
 }
-

@@ -1,12 +1,13 @@
 #include "business.h"
 
-Business::Business() {
-
+Business::Business()
+{
 }
 
-Business::~Business() {
-
+Business::~Business()
+{
 }
+
 void Business::buildCustomer(const string &filename)
 {
     // open the file
@@ -29,7 +30,7 @@ void Business::buildCustomer(const string &filename)
         if (!(split >> customerID >> lastName >> firstName))
         {
             cerr << "Error reading line: " << line << std::endl;
-            continue; 
+            continue;
         }
         // check if customerID is already in system
         if (customers.search(to_string(customerID)) == nullptr)
@@ -42,34 +43,43 @@ void Business::buildCustomer(const string &filename)
     inFile.close();
 }
 
-Customer* Business::getCustomer(int customerID) {
+Customer *Business::getCustomer(int customerID)
+{
     return customers.search(to_string(customerID));
 }
 
-int main() {
+int main()
+{
     Business business;
 
     business.buildCustomer("data4customers.txt");
 
     // look for customers in business
 
-    Customer* porky = business.getCustomer(8888);
-    Customer* daffy = business.getCustomer(9999);
-    Customer* mickey = business.getCustomer(1111);
+    Customer *porky = business.getCustomer(8888);
+    Customer *daffy = business.getCustomer(9999);
+    Customer *mickey = business.getCustomer(1111);
 
-    if (porky != nullptr) {
+    if (porky != nullptr)
+    {
         cout << "Test passed: Found customer 8888\n";
-    } else {
+    }
+    else
+    {
         cout << "Test failed: Could not find customer 8888\n";
     }
 
-    if (daffy != nullptr) {
+    if (daffy != nullptr)
+    {
         cout << "Test passed: Found customer 9999\n";
-    } else {
+    }
+    else
+    {
         cout << "Test failed\n";
     }
-    
-    if (mickey != nullptr) {
+
+    if (mickey != nullptr)
+    {
         cout << "Test passed: Found customer 1111\n";
     }
 }
