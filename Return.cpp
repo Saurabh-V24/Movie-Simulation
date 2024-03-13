@@ -9,7 +9,7 @@ Return::Return(Customer *customer, Movie *movie)
 Return::~Return() {}
 
 /**
- * doTrans: does borrow transaction with error handling
+ * doTrans: does return transaction with error handling
  * @param customerTable: the customer hashtable, (to add) MovieInventory: the movie inventory hashtable
  */
 bool Return::doTrans(HashTable *customerTable)
@@ -25,7 +25,7 @@ bool Return::doTrans(HashTable *customerTable)
     }
     if (movie != nullptr)
     {
-        // check if movie exists in inventory
+        // check if movie exists in inventory (replace with movie inv)
         if (movie->decreaseStock(1) == true)
         {
             setData();
