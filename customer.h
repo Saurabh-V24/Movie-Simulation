@@ -26,10 +26,10 @@ public:
     string getFirstName() const;
 
     string getLastName() const;
-    
+
     string getFullName() const;
 
-    void addMovie(Movie* movie);
+    void addMovie(Movie *movie);
 
     bool addTransaction(Transaction *type);
 

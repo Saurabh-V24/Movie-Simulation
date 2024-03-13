@@ -35,9 +35,9 @@ public:
     Business();
     Business(string const &file);
     ~Business();
-    
+
     void buildCustomer(const string &filename);
-    Customer* getCustomer(int customerID);
+    Customer *getCustomer(int customerID);
     void runningCommands(string const &data);
     void borrowCommand(ifstream& commandsFile, Customer* customer, char movieType);
     void returnCommand(ifstream& file, char& typeOfMovie); 
