@@ -1,26 +1,33 @@
+#ifndef CustomerInventory_hpp
+#define CustomerInventory_hpp
+
+#include <stdio.h>
+#include "customer.h"
 #include <iostream>
-#include <string>
-#include <array>
 
-using namespace std;
-
-class Customer;
-
-class HashTable
+class CustomerInventory
 {
-private:
-    static const int HASH_SIZE = 10000;
-    array<Customer *, HASH_SIZE> customerTable;
-    int hashFunction(const string &key);
-
 public:
-    HashTable();
-
-    ~HashTable();
-
-    void insert(const Customer &customer);
-
-    Customer *search(const string &customerID);
-
-    bool customerExists(const string &customerID);
+    static const int MAXN = 10000;
+    
+    CustomerInventory();
+    ~CustomerInventory();
+    
+    Customer* getCustomer(int id);
+    bool customerExisting(int id);
+    bool addCustomer(int id, string first_name, string last_name);
+    bool removeCustomer(int id);
+private:
+    struct customerNode
+    {
+        Customer* customer;
+        customerNode* next;
+    };
+    // HASH TABLE
+    customerNode* hash_T[MAXN];
+    
+    int hash_f(int id);
+    void deleteRec(customerNode* c);
 };
+
+#endif /* CustomerInventory_hpp */

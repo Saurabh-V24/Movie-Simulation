@@ -1,36 +1,17 @@
-#ifndef Inventory_h
-#define Inventory_h
+#ifndef inventory_h
+#define inventory_h
 
-#include <vector>
-#include <string>
-#include <iostream>
-#include <string>
-#include <fstream>
-
-#include "Movie.h"
-#include "MovieBST.h"
-#include "classic.h"
-#include "Comedy.h"
-#include "Drama.h"
+#include <stdio.h>
+#include "transaction.h"
 
 using namespace std;
 
-class Inventory
+class Inventory : public Transaction
 {
 public:
     Inventory();
-    ~Inventory();
-
-    Movie* getMovie(Movie*);
-    void viewInventory();
-    bool doesMovieExist(Movie*);
-    Movie* getMovieByTitle(int, string, int);
-
-    bool addingMovie(Movie*& );
-    // bool borrowingMovie(Movie *, string&);
-    // bool returningMovie(Movie*, string&);
-    void combineMovie(Movie*, int);
-private:
-    vector<MovieBST> typeOfMovie;
+    virtual ~Inventory();
+    virtual bool perform(MovieInventory&, CustomerInventory&);
 };
-#endif
+
+#endif /* inventory_h */

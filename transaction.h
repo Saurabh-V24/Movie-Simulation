@@ -1,34 +1,58 @@
-#ifndef Transaction_h
-#define Transaction_h
+#ifndef transaction_h
+#define transaction_h
 
-#include <iostream>
-#include <string>
-#include "Movie.h"
-#include "customer.h"
-#include "HashTable.h";
+#include <stdio.h>
 
+#include "HashTable.h"
+#include "movie.h"
+#include "MovieInventory.h"
 using namespace std;
-class Customer;
-class Movie;
-class HashTable;
 
 class Transaction
 {
 public:
-    // constructor
     Transaction();
-    // destructor
     virtual ~Transaction();
-    // does transaction
-    virtual bool doTrans();
-    // setting data will update the stock of the movie
-    // and update the customer history
-    virtual void setData();
-    // displays entire transaction
-    virtual string display();
-
+    virtual bool perform(MovieInventory&, CustomerInventory&);
 private:
-    // type of transaction
-    char transType;
+    char t_type;
 };
-#endif
+
+class Borrow: public Transaction
+{
+public:
+    Borrow(int, Movie*);
+    virtual ~Borrow();
+    virtual bool perform(MovieInventory&, CustomerInventory&);
+private:
+    Movie* movie;
+    int ID;
+};
+
+class Return: public Transaction
+{
+public:
+    Return(int, Movie*);     // constructor
+    virtual ~Return();       // destructor
+    int getCustomerID();     // get ID of the customer of the transaction
+    virtual bool perform(MovieInventory&, CustomerInventory&);  // perform Return movie
+    
+private:
+    Movie* movie;            // movie to Return
+    int ID;          // customer responsible for the transaction
+};
+
+class History: public Transaction
+{
+public:
+    History(int);            // constructor
+    virtual ~History();      // destructor
+    
+    // history
+    virtual bool perform(MovieInventory&, CustomerInventory&);
+    
+private:
+    int ID; // customer responsible for the transaction
+};
+
+#endif /* transaction_h */
