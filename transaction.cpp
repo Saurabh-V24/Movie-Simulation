@@ -8,7 +8,7 @@ Transaction::Transaction()
 Transaction::~Transaction(){}
 
 // empty function, never used, just for overload
-bool Transaction::perform(MovieInventory& ms, CustomerInventory& cs)
+bool Transaction::perform(MovieInventory& ms, HashTable& cs)
 {
     return true;
 }
@@ -24,7 +24,7 @@ History::History(int id)
 History::~History() {}
 
 // show history
-bool History::perform(MovieInventory &ms, CustomerInventory &cs)
+bool History::perform(MovieInventory &ms, HashTable&cs)
 {
     // customer is invalid
     if (!cs.customerExisting(ID)) {
@@ -50,7 +50,7 @@ Borrow::Borrow(int id, Movie* m)
 Borrow::~Borrow() {}
 
 // borrow movie
-bool Borrow::perform(MovieInventory &ms, CustomerInventory &cs)
+bool Borrow::perform(MovieInventory &ms, HashTable&cs)
 {
     // no such customer
     if (!cs.customerExisting(ID)) {
@@ -100,7 +100,7 @@ int Return::getCustomerID()
 }
 
 // returning the movie
-bool Return::perform(MovieInventory & ms, CustomerInventory &cs)
+bool Return::perform(MovieInventory & ms, HashTable&cs)
 {
     // if there is such customer
     if (!cs.customerExisting(ID)) {

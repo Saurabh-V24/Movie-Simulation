@@ -14,8 +14,7 @@ Movie::Movie(char genre, char type, string title, string director, int stock, in
     this->director = director;
     this->stock = stock;
     this->year = year;
-    
-    this->counted = false;
+    this->flag = false;
 }
 
 Movie::~Movie() {}
@@ -23,7 +22,7 @@ Movie::~Movie() {}
 // display
 void Movie::display() const
 {
-    cout << setw(7) << getGenre() << setw(7) << getType() << setw(35) << getTitle() << setw(20) << getDirector() << setw(7)<< getYear() << setw(7) <<getStock() << endl;
+    cout << setw(7) << getGenre() << setw(7) << getType() << setw(35) << getTitle() << setw(20) << getDirector() << setw(7)<< getYear() << setw(7) << getStock() << endl;
 }
 
 // getters
@@ -65,9 +64,9 @@ int Movie::getYear() const
 }
 
 // add to stock
-bool Movie::increaseStock(int s)
+bool Movie::increaseStock(int increment)
 {
-    stock += s;
+    stock += increment;
     return true;
 }
 
@@ -82,44 +81,50 @@ string Movie::getActor() const
 }
 
 // get counted status
-bool Movie::get_Cstat() const
+bool Movie::checkDup() const
 {
-    return counted;
+    return flag;
 }
 
 // set counted status
-void Movie::setC(bool c)
+void Movie::statusOfDup(bool dup)
 {
-    counted = c;
+    flag = dup;
 }
 
 // subtract from stock
-bool Movie::decreaseStock(int c)
+bool Movie::decreaseStock(int decrement)
 {
-    if (stock>0 && stock>=c) {
-        stock-=c;
+    if (stock>0 && stock>=decrement) {
+        stock-=decrement;
         return true;
     }
-    else return false;
+    else{
+        return false;
+    }
 }
 
-void Movie::addSameMovies(Movie *& s) {}
+void Movie::addDupMovies(Movie *& movie) {}
 
 // overloading
-bool Movie::operator>(const Movie &m) const
+bool Movie::operator>(const Movie &movie) const
 {
-    return this->year > m.getYear();
+    return this->year > movie.getYear();
 }
 
-bool Movie::operator<(const Movie &m) const
+bool Movie::operator<(const Movie &movie) const
 {
-    return this->year < m.getYear();
+    return this->year < movie.getYear();
 }
 
-bool Movie::operator==(const Movie &m) const
+bool Movie::operator==(const Movie &movie) const
 {
-    if (this -> title == m.title && this -> year == m.getYear()) return true;
-    else return false;
+    if (this -> title == movie.title && this -> year == movie.getYear()){
+        return true;
+    }
+    else{
+        return false;
+    } 
 }
 
 bool Movie::operator!=(const Movie &m) const
@@ -131,41 +136,57 @@ bool Movie::operator!=(const Movie &m) const
 //-----------------------------------Classic-----------------------------------------------
 
 //overloading
-bool Classic::operator==(const Movie & m) const
+bool Classic::operator==(const Movie &movie) const
 {
-    if (month == m.getMonth() && year==m.getYear() && getActor()==m.getActor()) return true;
-    else return false;
+    if (month == movie.getMonth() && year==movie.getYear() && getActor()==movie.getActor()){
+        return true;
+    }
+    else{
+        return false;
+    } 
 }
 
-bool Classic::operator!=(const Movie & m) const
+bool Classic::operator!=(const Movie & movie) const
 {
-    return !(*this==m);
+    return !(*this==movie);
 }
 
-bool Classic::operator<(const Movie &m) const
+bool Classic::operator<(const Movie &movie) const
 {
-    if (year < m.getYear()) return true;
-    else if (year==m.getYear()) {
-        if (month < m.getMonth()) return true;
-        else if (month == m.getMonth() && actor < m.getActor()) return true;
+    if (year < movie.getYear()){
+        return true;
+    } 
+    else if (year==movie.getYear()) {
+        if (month < movie.getMonth()){
+            return true;
+        }
+        else if (month == movie.getMonth() && actor < movie.getActor()){
+            return true;
+        } 
     }
     return false;
 }
 
-bool Classic::operator>(const Movie &m) const
+bool Classic::operator>(const Movie &movie) const
 {
-    if (year > m.getYear()) return true;
-    else if (year==m.getYear()) {
-        if (month > m.getMonth()) return true;
-        else if (month == m.getMonth() && actor > m.getActor()) return true;
+    if (year > movie.getYear()){
+        return true;
+    }
+    else if (year==movie.getYear()) {
+        if (month > movie.getMonth()){
+            return true;
+        } 
+        else if (month == movie.getMonth() && actor > movie.getActor()){
+            return true;
+        } 
     }
     return false;
 }
 
 // constructor
-Classic::Classic(char genre, char Type, string title, string director, int stock, int year, int month, string actor) : Movie(genre, Type, title, director, stock, year)
+Classic::Classic(char genre, char type, string title, string director, int stock, int year, int month, string actor) : Movie(genre, type, title, director, stock, year)
 {
-    this -> actor = actor;
+    this->actor = actor;
     this->month = month;
 }
 
@@ -175,15 +196,15 @@ Classic::~Classic() {}
 // display
 void Classic::display() const
 {
-    cout << setw(7) << getGenre() << setw(7) << getType() << setw(35) << getTitle() << setw(20) << getDirector() << setw(7) << getMonth() << setw(7)<< getYear() << setw(7)  << getTotalS() << endl;
+    cout << setw(7) << getGenre() << setw(7) << getType() << setw(35) << getTitle() << setw(20) << getDirector() << setw(7) << getMonth() << setw(7)<< getYear() << setw(7)  << getTotalStock() << endl;
     cout << setw(73) << this -> getActor() << " -------------" << setw(3) << this -> getStock() << endl;
     
-    for (int i = 0; i < sameMovies.size(); i++) cout << setw(73) << sameMovies[i] -> getActor() << " -------------" << setw(3) << sameMovies[i] -> getStock() << endl;
+    for (int i = 0; i < dupMovie.size(); i++) cout << setw(73) << dupMovie[i] -> getActor() << " -------------" << setw(3) << dupMovie[i] -> getStock() << endl;
 }
 
 // getters
 
-int Classic::getMonth() const
+int Classic::getMonth() const   
 {
     return this->month;
 }
@@ -193,47 +214,45 @@ string Classic::getActor() const
     return this->actor;
 }
 
-int Classic::getTotalS() const
+int Classic::getTotalStock() const
 {
-    int totalS = getStock();
-    for (int i=0; i<sameMovies.size(); i++) {
-        if (!sameMovies[i]->get_Cstat()) {
-            totalS += sameMovies[i]->getStock();
-            sameMovies[i]->setC(true);
+    int currentStock = getStock();
+    for (int i=0; i<dupMovie.size(); i++) {
+        if (!dupMovie[i]->checkDup()) {
+            currentStock += dupMovie[i]->getStock();
+            dupMovie[i]->statusOfDup(true);
         }
     }
-    return totalS;
+    return currentStock;
 }
 
 // subtract from stock
-bool Classic::subtractFromStock(int c)
+bool Classic::subtractFromStock(int other)
 {
-    if (stock >= c && c>0) {
-        stock-=c;
+    if (stock >= other && other > 0) {
+        stock-=other;
         return true;
     }
-    // checking for same movies
-    else if (sameMovies.size()>0) {
-        setC(true);
-        for (int i=0; i<sameMovies.size(); i++) {
-            if (!sameMovies[i]->get_Cstat() && sameMovies[i]->decreaseStock(c)) return true;
-            sameMovies[i]->setC(true);
+    else if (dupMovie.size()>0) {
+        statusOfDup(true);
+        for (int i=0; i<dupMovie.size(); i++) {
+            if (!dupMovie[i]->checkDup() && dupMovie[i]->decreaseStock(other)) return true;
+            dupMovie[i]->statusOfDup(true);
         }
         return false;
     }
-    else return false;
+    else{
+        return false;
+    } 
 }
 
 
 // adding same movies
-void Classic::addSameMovies(Movie *& m)
+void Classic::addSameMovie(Movie *& movie)
 {
-    sameMovies.push_back(m);
+    dupMovie.push_back(movie);
 }
 
-
-
-//-----------------------------------Comedy-----------------------------------------------
 
 // constructor
 Comedy::Comedy(char genre, char Type, string title, string director, int stock, int year) : Movie(genre, Type, title, director, stock, year) {}
@@ -241,10 +260,14 @@ Comedy::Comedy(char genre, char Type, string title, string director, int stock, 
 Comedy::~Comedy() {}
 
 // overloading
-bool Comedy::operator==(const Movie &m) const
+bool Comedy::operator==(const Movie &movie) const
 {
-    if (title == m.getTitle() && year==m.getYear()) return true;
-    else return false;
+    if (title == movie.getTitle() && year==movie.getYear()){
+        return true;
+    }
+    else{
+        return false;
+    }
 }
 
 bool Comedy::operator!=(const Movie &m) const

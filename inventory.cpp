@@ -6,7 +6,7 @@ Inventory::Inventory() {}
 
 Inventory::~Inventory() {}
 
-bool Inventory::perform(MovieInventory& m, CustomerInventory& c)
+bool Inventory::perform(MovieInventory& m, HashTable& c)
 {
     m.printInventory();
     return true;

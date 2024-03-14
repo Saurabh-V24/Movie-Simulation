@@ -11,7 +11,7 @@ class Inventory : public Transaction
 public:
     Inventory();
     virtual ~Inventory();
-    virtual bool perform(MovieInventory&, CustomerInventory&);
+    virtual bool perform(MovieInventory&, HashTable&);
 };
 
 #endif /* inventory_h */

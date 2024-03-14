@@ -15,7 +15,7 @@ class TransactionFactory
 public:
     TransactionFactory();               // constructor
     ~TransactionFactory();              // destructor
-    Transaction* create(char type, int id, Movie*& m);   // create transactions
+    Transaction* factory(char type, int id, Movie*& movie);   // create transactions
 };
 
 

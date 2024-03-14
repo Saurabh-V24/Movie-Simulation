@@ -1,4 +1,3 @@
-
 #include "BST.h"
 
 BST::BST()
@@ -75,12 +74,15 @@ bool BST::insertRec(Node *& cur, Movie*& newM)
         cur->movie = newM;
         return true;
     }
-    // already here
-    else if (*cur->movie == *newM) return false;
-    // go left
-    else if (*cur->movie > *newM) return insertRec(cur->left, newM);
-    // go right
-    else return insertRec(cur->right, newM);
+    else if (*cur->movie == *newM){
+        return false;
+    } 
+    else if (*cur->movie > *newM){
+        return insertRec(cur->left, newM);
+    } 
+    else{
+        return insertRec(cur->right, newM);
+    } 
 }
 
 
@@ -96,9 +98,9 @@ bool BST::getMovieByTitleRec(string title, int year, Movie *&f, Node *cur)
     // yes movie
     else if (cur->movie->getTitle()==title &&
              cur->movie->getYear()==year   &&
-             !cur->movie->get_Cstat()) {
+             !cur->movie->checkDup()) {
         f = cur->movie;
-        f->setC(true);
+        f->statusOfDup(true);
         return true;
     }
     else return getMovieByTitleRec(title, year, f, cur->left) || getMovieByTitleRec(title, year, f, cur->right);
@@ -112,9 +114,9 @@ void BST::printRec(Node *cur) const
         // go left
         printRec(cur->left);
         // print
-        if (!cur->movie->get_Cstat()) {
+        if (!cur->movie->checkDup()) {
             cur->movie->display();
-            cur->movie->setC(true);
+            cur->movie->statusOfDup(true);
             cout << endl;
         }
         // go right
@@ -132,7 +134,7 @@ void BST::resetRec(Node * cur)
 {
     if (cur!=nullptr) {
         resetRec(cur->left);
-        cur->movie->setC(false);
+        cur->movie->statusOfDup(false);
         resetRec(cur->right);
     }
 }

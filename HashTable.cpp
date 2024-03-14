@@ -3,7 +3,7 @@
 using namespace std;
 
 // constructor
-CustomerInventory::CustomerInventory()
+HashTable::HashTable()
 {
     for (int i=0; i<MAXN; i++) {
         hash_T[i] = new customerNode;
@@ -13,7 +13,7 @@ CustomerInventory::CustomerInventory()
 }
 
 // destructor
-CustomerInventory::~CustomerInventory()
+HashTable::~HashTable()
 {
     // clearing the hash table
     for (int i=0; i<MAXN; i++) {
@@ -26,7 +26,7 @@ CustomerInventory::~CustomerInventory()
 }
 
 // get customer from table
-Customer* CustomerInventory::getCustomer(int id)
+Customer* HashTable::getCustomer(int id)
 {
     // bucket
     int b = hash_f(id);
@@ -42,7 +42,7 @@ Customer* CustomerInventory::getCustomer(int id)
 }
 
 // check if such customer exists
-bool CustomerInventory::customerExisting(int id)
+bool HashTable::customerExisting(int id)
 {
     // bucket
     int b = hash_f(id);
@@ -56,7 +56,7 @@ bool CustomerInventory::customerExisting(int id)
 }
 
 // add new customer
-bool CustomerInventory::addCustomer(int id, string first_name, string last_name)
+bool HashTable::addCustomer(int id, string first_name, string last_name)
 {
     // if customer already exists
     if (customerExisting(id)) return false;
@@ -110,7 +110,7 @@ bool CustomerInventory::addCustomer(int id, string first_name, string last_name)
 // }
 
 // delete helper
-void CustomerInventory::deleteRec(customerNode *c)
+void HashTable::deleteRec(customerNode *c)
 {
     customerNode* to_del = c;
     while (c!=nullptr) {
@@ -123,7 +123,7 @@ void CustomerInventory::deleteRec(customerNode *c)
 }
 
 // hash function
-int CustomerInventory::hash_f(int id) {
+int HashTable::hash_f(int id) {
     return id%MAXN;
 }
 

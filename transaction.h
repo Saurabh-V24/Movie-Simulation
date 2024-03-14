@@ -13,7 +13,7 @@ class Transaction
 public:
     Transaction();
     virtual ~Transaction();
-    virtual bool perform(MovieInventory&, CustomerInventory&);
+    virtual bool perform(MovieInventory&, HashTable&);
 private:
     char t_type;
 };
@@ -23,7 +23,7 @@ class Borrow: public Transaction
 public:
     Borrow(int, Movie*);
     virtual ~Borrow();
-    virtual bool perform(MovieInventory&, CustomerInventory&);
+    virtual bool perform(MovieInventory&, HashTable&);
 private:
     Movie* movie;
     int ID;
@@ -35,7 +35,7 @@ public:
     Return(int, Movie*);     // constructor
     virtual ~Return();       // destructor
     int getCustomerID();     // get ID of the customer of the transaction
-    virtual bool perform(MovieInventory&, CustomerInventory&);  // perform Return movie
+    virtual bool perform(MovieInventory&, HashTable&);  // perform Return movie
     
 private:
     Movie* movie;            // movie to Return
@@ -49,7 +49,7 @@ public:
     virtual ~History();      // destructor
     
     // history
-    virtual bool perform(MovieInventory&, CustomerInventory&);
+    virtual bool perform(MovieInventory&, HashTable&);
     
 private:
     int ID; // customer responsible for the transaction

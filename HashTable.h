@@ -5,13 +5,13 @@
 #include "customer.h"
 #include <iostream>
 
-class CustomerInventory
+class HashTable
 {
 public:
     static const int MAXN = 10000;
     
-    CustomerInventory();
-    ~CustomerInventory();
+    HashTable();
+    ~HashTable();
     
     Customer* getCustomer(int id);
     bool customerExisting(int id);

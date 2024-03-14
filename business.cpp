@@ -18,7 +18,7 @@ void Business::readCustomerFile(ifstream & in)
         readLine >> id;
         readLine >> lastName;
         readLine >> firstName;
-        customerHashTable.addCustomer(id, firstName, lastName);
+        hashTable.addCustomer(id, firstName, lastName);
         getline(in, line);
     }
 }
@@ -113,7 +113,7 @@ void Business::readTransactionFile(ifstream &in)
             }
         }
         // create transaction
-        t = transFactory.create(t_type, id, m);
+        t = transFactory.factory(t_type, id, m);
         performTransaction(t);
         
         // no memory leaks
@@ -135,7 +135,7 @@ void Business::readTransactionFile(ifstream &in)
 // do transaction
 bool Business::performTransaction(Transaction *t)
 {
-    if (t!=nullptr) return t->perform(movieTree, customerHashTable);
+    if (t!=nullptr) return t->perform(movieTree, hashTable);
     return false;
 }
 

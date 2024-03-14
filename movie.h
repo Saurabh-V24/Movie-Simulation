@@ -15,10 +15,10 @@ public:
     virtual ~Movie();
     
     // overloading
-    virtual bool operator==(const Movie& m) const;
-    virtual bool operator != (const Movie& m) const;
-    virtual bool operator > (const Movie& m) const;
-    virtual bool operator < (const Movie& m) const;
+    virtual bool operator==(const Movie& ) const;
+    virtual bool operator!=(const Movie& ) const;
+    virtual bool operator>(const Movie& ) const;
+    virtual bool operator<(const Movie& ) const;
     
     // getters
     char getGenre() const;
@@ -27,28 +27,26 @@ public:
     string getDirector() const;
     int getStock() const;
     int getYear() const;
-    bool get_Cstat() const;
+    bool checkDup() const;
 
     virtual void display() const;
     string getMovieInfo() const;
     virtual string getActor() const;
     virtual int getMonth() const;
     
-    bool increaseStock(int);
-    virtual bool decreaseStock(int);
-    void setC(bool);
-    virtual void addSameMovies(Movie*&);
+    void statusOfDup(bool);
+    bool increaseStock(int );
+    virtual bool decreaseStock(int );
+    virtual void addDupMovies(Movie*& );
         
 protected:
     string title;
     string director;
-    int year; //year released
-    
+    int year; 
     char genre;
-    char type; //type of movie
-    
+    char type;
     int stock;
-    bool counted;
+    bool flag;
 };
 
 
@@ -68,12 +66,12 @@ public:
     virtual int getMonth() const;
     virtual void display() const;
     virtual string getActor() const;
-    int getTotalS() const;
+    int getTotalStock() const;
         
     virtual bool subtractFromStock(int);
-    virtual void addSameMovies(Movie*&);
+    virtual void addSameMovie(Movie*&);
 private:
-    vector<Movie*> sameMovies;
+    vector<Movie*> dupMovie;
     string actor; // actor name
     int month;
 };

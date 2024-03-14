@@ -6,16 +6,18 @@ using namespace std;
 // constructor
 MovieInventory::MovieInventory()
 {
-    BST comedy, classic, drama;
-    movieType.push_back(comedy);
-    movieType.push_back(classic);
-    movieType.push_back(drama);
+    BST comedy; 
+    BST classic;
+    BST drama;
+    typeOfMovie.push_back(comedy);
+    typeOfMovie.push_back(classic);
+    typeOfMovie.push_back(drama);
 }
 
 // destructor
 MovieInventory::~MovieInventory()
 {
-    movieType.clear();
+    typeOfMovie.clear();
 }
 
 // get the movie from BST
@@ -24,15 +26,15 @@ Movie* MovieInventory::getMovie(Movie *m)
     Movie *fd = nullptr;
     switch (m->getGenre()) {
         case 'F': // Comedy
-            movieType[0].getMovie(*m, fd);
+            typeOfMovie[0].getMovie(*m, fd);
             return fd;
             break;
         case 'D': // Drama
-            movieType[1].getMovie(*m, fd);
+            typeOfMovie[1].getMovie(*m, fd);
             return fd;
             break;
         case 'C': // Classics
-            movieType[2].getMovie(*m, fd);
+            typeOfMovie[2].getMovie(*m, fd);
             return fd;
             break;
             
@@ -54,8 +56,8 @@ bool MovieInventory::if_movie_exists(Movie *m)
 // print the inventory
 void MovieInventory::printInventory()
 {
-    for (int i=0; i<movieType.size(); i++) {
-        cout << "-----------------------" << endl;
+    for (int i=0; i<typeOfMovie.size(); i++) {
+        cout << "----------------------------------------------------------------------------------------------------------" << endl;
         switch (i) {
             case 0:
                 cout << "Comedies:" << endl << endl;
@@ -72,65 +74,69 @@ void MovieInventory::printInventory()
             case 2:
                 cout << "Classics:" << endl << endl;
                 cout << setw(7) << "Genre" << setw(7) << "Media" << setw(35) << "Title" << setw(20)
-                << "Director&Actor" << setw(8) << "Month" << setw(7)<< "Year" << setw(7)  << "Stock" << endl;
+                << "Director" << setw(8) << "Month" << setw(7)<< "Year" << setw(7)  << "Stock" << endl;
                 break;
-                
             default:
                 break;
         }
-        cout << movieType[i];
-        movieType[i].reset();
+        cout << typeOfMovie[i];
+        typeOfMovie[i].reset();
     }
+    cout << "----------------------------------------------------------------------------------------------------------" << endl;
+    
 }
 
 // add movie to the inventory
-bool MovieInventory::addMovie(Movie *&m)
+bool MovieInventory::addMovie(Movie *&movie)
 {
-    bool good = false;
-    if (m) {
-        switch (m->getGenre()) {
+    bool checkAdd = false;
+    if (movie) {
+        switch (movie->getGenre()) {
             case 'F': // Comedy
-                good = movieType[0].addMovie(m);
-                return good;
+                checkAdd = typeOfMovie[0].addMovie(movie);
+                return checkAdd;
                 break;
                 
             case 'C': // Classics
-                good = movieType[2].addMovie(m);
-                if (good) // insert pointers to the same movies with different actors
+                checkAdd = typeOfMovie[2].addMovie(movie);
+                if (checkAdd) // insert pointers to the same movies with different actors
                 {
-                    m -> setC(true);
-                    addAllSameM(m, 1);
-                    movieType[2].reset();
+                    movie -> statusOfDup(true);
+                    addAllSameM(movie, 1);
+                    typeOfMovie[2].reset();
                 }
-                return good;
+                return checkAdd;
                 break;
                 
             case 'D': // Drama
-                good = movieType[1].addMovie(m);
-                return good;
+                checkAdd = typeOfMovie[1].addMovie(movie);
+                return checkAdd;
                 break;
                 
             default:
-                return good;
+                return checkAdd;
                 break;
         }
     }
-    return good;
+    return checkAdd;
 }
 // borrow movie
-bool MovieInventory::borrowMovie(Movie *m, string & info)
+bool MovieInventory::borrowMovie(Movie *movie, string & info)
 {
     bool good = false;
     // if movie exists
-    if (if_movie_exists(m)) {
-        Movie* borrow = getMovie(m);
+    if (if_movie_exists(movie)) {
+        Movie* borrow = getMovie(movie);
         if (borrow->decreaseStock(1)) { // update stock
             info = borrow->getMovieInfo();  // get info
             good = true;
         }
     }
-    for (int i=0; i<movieType.size(); i++) movieType[i].reset();
+    for (auto &movie : typeOfMovie) {
+        movie.reset();
+    }
     return good;
+
 }
 
 // return movie
@@ -150,7 +156,7 @@ bool MovieInventory::returnMovie(Movie *m, string & info)
 Movie* MovieInventory::getMovieByTitle(int indx, string title, int year)
 {
     Movie* fd = nullptr;
-    movieType[indx].getMovieByTitle(title, year, fd);
+    typeOfMovie[indx].getMovieByTitle(title, year, fd);
     return fd;
 }
 
@@ -159,8 +165,8 @@ void MovieInventory::addAllSameM(Movie* m, int indx)
 {
     Movie* fd = getMovieByTitle(indx, m->getTitle(), m->getYear());
     while (fd!=nullptr) {
-        m->addSameMovies(fd);
-        fd->addSameMovies(m);
+        m->addDupMovies(fd);
+        fd->addDupMovies(m);
         fd = getMovieByTitle(indx, m->getTitle(), m->getYear());
     }
 }

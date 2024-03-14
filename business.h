@@ -27,7 +27,7 @@ public:
     bool performTransaction (Transaction*);
 private:
     MovieInventory movieTree;                      // BST
-    CustomerInventory customerHashTable;               // hash table
+    HashTable hashTable;               // hash table
     MovieFactory movieFactory;                     // movie factory
     TransactionFactory transFactory;               // transaction factory
     

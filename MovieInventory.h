@@ -26,7 +26,7 @@ public:
     void addAllSameM(Movie* m, int s);
 private:
     // 3 BSTs. One for each type of movie 
-    vector<BST> movieType;
+    vector<BST> typeOfMovie;
 };
 
 #endif /* MovieInventory_h */
