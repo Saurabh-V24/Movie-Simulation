@@ -1,125 +1,153 @@
 #include "business.h"
+#include <limits>
 
-Business::Business()
-{
-}
+using namespace std;
 
-Business::Business(string const &file)
-{
+Business::Business() {}
+Business::~Business() {}
 
-    movie.buildInventory(file);
-}
-
-Business::~Business()
+// reading customers
+void Business::readCustomerFile(ifstream & in)
 {
-}
-void Business::buildCustomer(const string &filename)
-{
-    // open the file
-    ifstream inFile;
-    inFile.open(filename);
-    // return an error if file cannot be opened
-    if (!inFile.is_open())
-    {
-        cerr << "Unable to open file: " << filename << endl;
-        // student list is empty
+    int id;
+    string firstName, lastName, line;
+    getline(in, line);
+    while (!in.eof()) {
+        // read line
+        stringstream readLine(line);
+        readLine >> id;
+        readLine >> lastName;
+        readLine >> firstName;
+        customerHashTable.addCustomer(id, firstName, lastName);
+        getline(in, line);
     }
+}
+
+// reading movies
+void Business::readMovieFile(ifstream &in)
+{
+    char genre = 'Z';
+    int stock=0, month=0, year=0;
+    string director, title, actor;
+    
     string line;
-    // read each line of the file
-    while (getline(inFile, line))
-    {
-        istringstream split(line);
-        int customerID;
-        string lastName, firstName;
-        // check if file is formatted
-        if (!(split >> customerID >> lastName >> firstName))
-        {
-            cerr << "Error reading line: " << line << endl;
-            continue;
+    getline(in, line);
+    
+    while (!in.eof()) {
+        // movie info
+        stringstream readLine(line);
+        string s;
+        readLine >> s;
+        genre = s[0];
+        readLine >> stock;
+        readLine >> s;
+        director = readStringStream(readLine);
+        title = readStringStream(readLine);
+        // if classics -> more info
+        if (genre == 'C') {
+            readLine >> actor >> s;
+            actor = actor + " " + s;
+            readLine >> s;
+            istringstream(s) >> month;
         }
-        // check if customerID is already in system
-        if (customers.search(to_string(customerID)) == nullptr)
-        {
-            // add customer to hashtable
-            Customer customer(customerID, lastName, firstName);
-            customers.insert(customer);
-        }
+        readLine >> year;
+        // create movie
+        Movie *newM = movieFactory.factory(genre, title, director, actor, month, year, stock);
+        // no memory leaks
+        if (!movieTree.addMovie(newM)) delete newM;
+        title = "";
+        director = "";
+        actor = "";
+        genre = 'Z';
+        stock = 0;
+        year = 0;
+        month = 0;
+        
+        getline(in, line);
     }
-    inFile.close();
 }
 
 // reading commands
-void Business::readCommands(const string &file)
+void Business::readTransactionFile(ifstream &in)
 {
-    ifstream inFile;
-    inFile.open(file);
-    if (!inFile.is_open())
-    {
-        cerr << "Unable to open file: " << file << endl;
-    }
-
+    char t_type, m_type, genre;
+    int id= 0, month=0, year=0;
+    string actor, director, title, s;
+    Movie* m=nullptr;
+    Transaction* t=nullptr;
+    
     string line;
-    while (getline(inFile, line))
-    {
-        istringstream split(line);
-        char command;
-        split >> command;
-        // check if command is valid
-        if (command != 'B' && command != 'R' && command != 'I' && command != 'H')
-        {
-            cerr << "Invalid command: " << command << endl;
-            continue;
+    getline(in, line);
+    
+    while (!in.eof()) {
+        stringstream readLine(line);
+        readLine >> t_type; // command type. H - history, R - return, B - borrow
+        if (t_type=='H' || t_type=='R' || t_type=='B') {
+            readLine >> id; // customer id
+            if (t_type != 'H') {
+                readLine >> m_type;
+                if (m_type!='D') {
+                    cout << "ERROR: " << m_type << " Invalid Media Type. Try Again." << endl;
+                }
+                else {
+                    // which movie to borrow/return
+                    readLine >> genre;
+                    switch (genre) {
+                        case 'F':
+                            title = readStringStream(readLine);
+                            readLine >> year;
+                            break;
+                        case 'D':
+                            director = readStringStream(readLine);
+                            title = readStringStream(readLine);
+                            break;
+                        case 'C':
+                            readLine >> month >> year;
+                            readLine >> actor >> s;
+                            actor = actor + " " + s;
+                            break;
+                    }
+                    // create temp movie to work with
+                    m = movieFactory.factory(genre, title, director, actor, month, year, 0);
+                }
+            }
         }
-
-        // process transaction
-        if (command == 'B')
-        {
-            int customerID;
-            string mediaType, movieType;
-            int releaseYear;
-            string title;
-            split >> customerID >> mediaType >> movieType >> releaseYear;
-            getline(split, title);
-            title = title.substr(1);
-            // get customer from hashtable
-            Customer *customer = customers.search(to_string(customerID));
-            // get movie from inventory
-            Movie *movie = movie.search(mediaType, movieType, releaseYear, title);
-            Transaction *borrow = new Borrow(customer, movie);
-            // does specified transaction
-            borrow->doTrans();
-        }
-        else if (command == 'R')
-        {
-            int customerID;
-            string mediaType, movieType;
-            int releaseYear;
-            string title;
-            split >> customerID >> mediaType >> movieType >> releaseYear;
-            getline(split, title);
-            title = title.substr(1);
-            // get customer from hashtable
-            Customer *customer = customers.search(to_string(customerID));
-            // get movie from inventory
-            Movie *movie = movie.search(mediaType, movieType, releaseYear, title);
-            Transaction *returnTrans = new Return(customer, movie);
-            // does specified transaction
-            returnTrans->doTrans();
-        }
-        else if (command == 'H')
-        {
-            // call history transaction
-            int customerID;
-            split >> customerID;
-            Customer *customer = customers.search(to_string(customerID));
-            Transaction *history = new History(customerID);
-            history->doTrans(); // Remove the unnecessary argument
-        }
+        // create transaction
+        t = transFactory.create(t_type, id, m);
+        performTransaction(t);
+        
+        // no memory leaks
+        delete t;
+        
+        title = "";
+        director = "";
+        actor = "";
+        genre = 'Z';
+        year = 0;
+        month = 0;
+        t = nullptr;
+        m = nullptr;
+        
+        getline(in,line);
     }
 }
 
-/**
- * processTransaction: processes the transaction
- * precondition: none
- * postcondition: processes the transaction
- */
+// do transaction
+bool Business::performTransaction(Transaction *t)
+{
+    if (t!=nullptr) return t->perform(movieTree, customerHashTable);
+    return false;
+}
+
+// string stream
+string Business::readStringStream(stringstream &in)
+{
+    string s, t;
+    in >> s;
+    while (s[s.size()-1] != ',') {
+        in >> t;
+        s = s+" "+t;
+    }
+    if (s[s.size()-1]==',') s=s.substr(0,s.size()-1);
+    return s;
+}
