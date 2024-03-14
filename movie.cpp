@@ -1,3 +1,20 @@
+// ------------------------------------------------ movie.cpp -------------------------------------------------------
+
+// Bruce Duong, Saurabh Vasdev CSS 343 Section D
+
+// 03/02/2024
+
+// 03/12/2024
+
+// --------------------------------------------------------------------------------------------------------------------
+
+// Purpose - Implementation of movie class, used to store movie information
+//           Comedy, Drama, Classic classes are derived from Movie class
+//           Classic class has additional data members compared to Movie
+// --------------------------------------------------------------------------------------------------------------------
+
+// --------------------------------------------------------------------------------------------------------------------
+
 #include "movie.h"
 #include <stdio.h>
 #include <string>

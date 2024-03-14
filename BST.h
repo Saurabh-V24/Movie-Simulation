@@ -77,6 +77,8 @@ public:
      */
     bool getMovieByTitle(string title, int year, Movie *&foundMovie);
 
+    Node *getRoot() const;
+
     /**
      * Resets the tree by deleting all nodes and freeing memory.
      */

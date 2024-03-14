@@ -238,3 +238,5 @@ void BST::resetRec(Node *cur)
     }
 }
 // end of resetREc
+
+Node *BST::getRoot() const { return root; }
