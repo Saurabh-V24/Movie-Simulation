@@ -14,7 +14,6 @@ Movie::Movie(char genre, char type, string title, string director, int stock, in
     this->director = director;
     this->stock = stock;
     this->year = year;
-    
     this->counted = false;
 }
 

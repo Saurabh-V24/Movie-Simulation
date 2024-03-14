@@ -72,7 +72,7 @@ void MovieInventory::printInventory()
             case 2:
                 cout << "Classics:" << endl << endl;
                 cout << setw(7) << "Genre" << setw(7) << "Media" << setw(35) << "Title" << setw(20)
-                << "Director&Actor" << setw(8) << "Month" << setw(7)<< "Year" << setw(7)  << "Stock" << endl;
+                << "Director" << setw(8) << "Month" << setw(7)<< "Year" << setw(7)  << "Stock" << endl;
                 break;
                 
             default:
